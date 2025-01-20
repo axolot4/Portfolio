@@ -1,24 +1,24 @@
 version: '3.9'
 
 services:
-  fe-lecoingameover:
-    image: fe-lecoingameover
-    container_name: fe-lecoingameover
+  fe-portfolio:
+    image: fe-portfolio
+    container_name: fe-portfolio
     build:
-      context: fe-lecoingameover
+      context: fe-portfolio
       dockerfile: Dockerfile
       args:
         - BUILD_MODE=development
     ports:
       - "3000:3000"
     volumes:
-      - ./fe-lecoingameover/src:/app/src
+      - ./fe-portfolio/src:/app/src
 
-  be-lecoingameover:
+  be-portfolio:
     image: openjdk:17
-    hostname: be-lecoingameover
+    hostname: be-portfolio
     build:
-      context: be-lecoingameover
+      context: be-portfolio
       dockerfile: Dockerfile
     ports:
       - "8080:8080"

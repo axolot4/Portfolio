@@ -1,4 +1,4 @@
-package com.lecoingameover.belecoingameover.utils.exceptions;
+package com.portfolio.beportfolio.utils.exceptions;
 
 public class OutOfStockException extends RuntimeException {
     public OutOfStockException(String message) {

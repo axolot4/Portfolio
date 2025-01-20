@@ -1,4 +1,4 @@
-package com.lecoingameover.belecoingameover.utils.exceptions;
+package com.portfolio.beportfolio.utils.exceptions;
 
 public class InvalidInputException extends RuntimeException{
 
