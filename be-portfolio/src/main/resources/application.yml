@@ -1,19 +1,19 @@
-server.port: 8080
+server:
+  port: 8080
 
 logging:
   level:
     root: INFO
-    com.be-lecoingameover: DEBUG
+    com.be-portfolio: DEBUG
     org.hibernate.SQL: DEBUG
     org.springframework.data.mongodb.core.MongoTemplate: DEBUG
-
 
 spring:
   data:
     mongodb:
       host: mongo
       port: 27017
-      database: lecoingameoverdb
+      database: portfoliodb
       username: root
       password: password
       authentication-database: admin
@@ -24,18 +24,17 @@ de:
       embedded:
         version: 5.0.5
 
-
 ---
 spring:
   config:
     activate:
       on-profile: docker
-
   data:
     mongodb:
       host: mongo
       port: 27017
-      database: lecoingameoverdb
+      database: portfoliodb
       username: root
       password: password
       authentication-database: admin
+      uri: mongodb://root:password@mongo:27017/portfoliodb?authSource=admin

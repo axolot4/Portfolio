@@ -1,5 +1,3 @@
-version: '3.9'
-
 services:
   fe-portfolio:
     image: fe-portfolio
@@ -8,22 +6,32 @@ services:
       context: fe-portfolio
       dockerfile: Dockerfile
       args:
-        - BUILD_MODE=development
+        BUILD_MODE: development
     ports:
       - "3000:3000"
+    env_file:
+      - fe-portfolio/.env
     volumes:
       - ./fe-portfolio/src:/app/src
+    depends_on:
+      - be-portfolio
 
   be-portfolio:
     image: openjdk:17
-    hostname: be-portfolio
+    container_name: be-portfolio
     build:
       context: be-portfolio
       dockerfile: Dockerfile
     ports:
       - "8080:8080"
     environment:
-      - SPRING_PROFILES_ACTIVE=docker
+      SPRING_PROFILES_ACTIVE: docker
+      SPRING_DATA_MONGODB_URI: mongodb://root:password@mongo:27017/portfoliodb?authSource=admin
+    dns:
+      - 8.8.8.8
+      - 1.1.1.1
+    env_file:
+      - be-portfolio/.env
     depends_on:
       - mongo
 
@@ -45,9 +53,9 @@ services:
     ports:
       - "8082:8081"
     environment:
-      - ME_CONFIG_MONGODB_ADMINUSERNAME=root
-      - ME_CONFIG_MONGODB_ADMINPASSWORD=password
-      - ME_CONFIG_MONGODB_SERVER=mongo
-      - ME_CONFIG_MONGODB_ENABLE_ADMIN=true
+      ME_CONFIG_MONGODB_ADMINUSERNAME: root
+      ME_CONFIG_MONGODB_ADMINPASSWORD: password
+      ME_CONFIG_MONGODB_SERVER: mongo
+      ME_CONFIG_MONGODB_ENABLE_ADMIN: "true"
     depends_on:
       - mongo
