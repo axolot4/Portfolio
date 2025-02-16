@@ -61,4 +61,24 @@ public class CommentServiceImpl implements CommentService{
         Comment comment = commentRepository.findCommentByCommentId(commentId);
         commentRepository.delete(comment);
     }
+
+    @Override
+    public List<CommentResponseModel> getApprovedComments() {
+        List<Comment> comments = commentRepository.findCommentByApproved(true);
+        return commentResponseMapper.entityListToResponseModelList(comments);
+    }
+
+    @Override
+    public List<CommentResponseModel> getPendingComments() {
+        List<Comment> comments = commentRepository.findCommentByApproved(false);
+        return commentResponseMapper.entityListToResponseModelList(comments);
+    }
+
+    @Override
+    public CommentResponseModel approveComment(String commentId) {
+        Comment comment = commentRepository.findCommentByCommentId(commentId);
+        comment.setApproved(true);
+        Comment approvedComment = commentRepository.save(comment);
+        return commentResponseMapper.entityToResponseModel(approvedComment);
+    }
 }

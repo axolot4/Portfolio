@@ -45,4 +45,19 @@ public class CommentController {
         commentService.deleteComment(commentId);
         return ResponseEntity.noContent().build();
     }
+
+    @GetMapping("/approved")
+    public ResponseEntity<List<CommentResponseModel>> getApprovedComments() {
+        return ResponseEntity.ok().body(commentService.getApprovedComments());
+    }
+
+    @GetMapping("/pending")
+    public ResponseEntity<List<CommentResponseModel>> getPendingComments() {
+        return ResponseEntity.ok().body(commentService.getPendingComments());
+    }
+
+    @PutMapping("/approve/{commentId}")
+    public ResponseEntity<CommentResponseModel> approveComment(@PathVariable String commentId) {
+        return ResponseEntity.ok(commentService.approveComment(commentId));
+    }
 }

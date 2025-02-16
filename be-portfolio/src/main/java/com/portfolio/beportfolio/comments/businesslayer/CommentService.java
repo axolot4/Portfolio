@@ -11,5 +11,8 @@ public interface CommentService {
     CommentResponseModel addComment(CommentRequestModel commentRequestModel);
     CommentResponseModel updateComment(String commentId, CommentRequestModel commentRequestModel);
     void deleteComment(String commentId);
+    List<CommentResponseModel> getApprovedComments();
+    List<CommentResponseModel> getPendingComments();
+    CommentResponseModel approveComment(String commentId);
 
 }

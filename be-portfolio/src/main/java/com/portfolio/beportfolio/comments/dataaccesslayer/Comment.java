@@ -4,6 +4,7 @@ import lombok.*;
 import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.index.Indexed;
 import org.springframework.data.mongodb.core.mapping.Document;
+import org.springframework.data.mongodb.core.mapping.Field;
 
 @Setter
 @Getter
@@ -20,5 +21,7 @@ public class Comment {
     private String user;
     private String commentContent;
 
+    @Field(name = "approved")
+    private boolean approved = false;
 
 }

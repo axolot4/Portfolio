@@ -13,4 +13,5 @@ public class CommentResponseModel {
     private String commentId;
     private String user;
     private String commentContent;
+    private boolean approved;
 }

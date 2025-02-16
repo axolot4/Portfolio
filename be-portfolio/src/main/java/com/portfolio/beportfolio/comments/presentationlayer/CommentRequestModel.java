@@ -12,4 +12,5 @@ import lombok.NoArgsConstructor;
 public class CommentRequestModel {
     private String user;
     private String commentContent;
+    private boolean approved;
 }

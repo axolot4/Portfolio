@@ -1,0 +1,36 @@
+{
+  "login": {
+    "admin_login": "Connexion Admin",
+    "username": "Nom d'utilisateur",
+    "password": "Mot de passe",
+    "login_button": "Se connecter"
+  },
+  "buttons": {
+    "cancel": "Annuler",
+    "delete": "Supprimer",
+    "yes_delete": "Oui, Supprimer"
+  },
+  "homepage": {
+    "welcome_message": "Bienvenue sur mon site",
+    "subtitle": "Développeur logiciel | C# | Java | SQL"
+  },
+  "skills": {
+    "title": "Compétences"
+  },
+  "projects": {
+    "title": "Projets"
+  },
+  "comments": {
+    "title": "Commentaires",
+    "add_comment": "Poster un commentaire"
+  },
+  "contact": {
+    "title": "Me contacter",
+    "email": "Email",
+    "linkedin": "LinkedIn",
+    "github": "GitHub"
+  },
+  "footer": {
+    "copyright": "Ricardo. Tous droits réservés."
+  }
+}
