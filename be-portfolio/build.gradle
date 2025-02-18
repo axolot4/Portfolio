@@ -51,6 +51,8 @@ dependencies {
 	testImplementation 'io.projectreactor:reactor-test'
 	testImplementation('de.flapdoodle.embed:de.flapdoodle.embed.mongo.spring3x:4.12.3')
 	testImplementation 'org.mock-server:mockserver-netty:5.14.0'
+	implementation platform('org.springframework.boot:spring-boot-dependencies:3.4.0')
+
 }
 
 jacocoTestReport {

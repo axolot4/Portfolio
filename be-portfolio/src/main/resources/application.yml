@@ -11,30 +11,10 @@ logging:
 spring:
   data:
     mongodb:
-      host: mongo
-      port: 27017
-      database: portfoliodb
-      username: root
-      password: password
-      authentication-database: admin
+      uri: mongodb+srv://measf:teehee80@cluster0.dhr8c.mongodb.net/portfoliodb?retryWrites=true&w=majority&appName=Cluster0
 
 de:
   flapdoodle:
     mongodb:
       embedded:
         version: 5.0.5
-
----
-spring:
-  config:
-    activate:
-      on-profile: docker
-  data:
-    mongodb:
-      host: mongo
-      port: 27017
-      database: portfoliodb
-      username: root
-      password: password
-      authentication-database: admin
-      uri: mongodb://root:password@mongo:27017/portfoliodb?authSource=admin
