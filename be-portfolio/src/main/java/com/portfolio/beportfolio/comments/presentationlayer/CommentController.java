@@ -8,9 +8,11 @@ import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
+
 @RestController
 @RequestMapping("api/v1/comments")
 @Slf4j
+@CrossOrigin(origins = "*")
 public class CommentController {
     private CommentService commentService;
 

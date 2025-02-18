@@ -11,6 +11,7 @@ import java.util.List;
 @RestController
 @RequestMapping("api/v1/projects")
 @Slf4j
+@CrossOrigin(origins = "*")
 public class ProjectController {
 
     private ProjectService projectService;
