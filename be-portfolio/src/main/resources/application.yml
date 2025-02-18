@@ -18,3 +18,12 @@ de:
     mongodb:
       embedded:
         version: 5.0.5
+
+---
+spring:
+  config:
+    activate:
+      on-profile: docker
+  data:
+    mongodb:
+      uri: mongodb+srv://measf:teehee80@cluster0.dhr8c.mongodb.net/portfoliodb?retryWrites=true&w=majority&appName=Cluster0
