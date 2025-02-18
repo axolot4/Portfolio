@@ -8,7 +8,8 @@ const ProjectDetails: React.FC = () => {
   const [project, setProject] = useState<{
     projectId: string;
     projectName: string;
-    projectDescription: string;
+    projectDescriptionEn: string;
+    projectDescriptionFr: string;
     projectImages: string[];
   } | null>(null);
 
@@ -26,8 +27,30 @@ const ProjectDetails: React.FC = () => {
   return (
     <div className="project-details-container">
       <button className="back-btn" onClick={() => navigate("/")}>← Back to Projects</button>
+
       <h1>{project.projectName}</h1>
-      <p>{project.projectDescription}</p>
+
+      {/* English Description */}
+      <h2>🇬🇧 English</h2>
+      <p>
+        {project.projectDescriptionEn.split("<br />").map((line, index) => (
+          <React.Fragment key={index}>
+            {line}
+            <br />
+          </React.Fragment>
+        ))}
+      </p>
+
+      {/* French Description */}
+      <h2>🇫🇷 Français</h2>
+      <p>
+        {project.projectDescriptionFr.split("<br />").map((line, index) => (
+          <React.Fragment key={index}>
+            {line}
+            <br />
+          </React.Fragment>
+        ))}
+      </p>
 
       {/* Main Image */}
       <img src={project.projectImages[0]} alt={project.projectName} className="main-image" />

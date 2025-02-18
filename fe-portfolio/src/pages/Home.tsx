@@ -8,7 +8,11 @@ const Home: React.FC = () => {
   const [isLoggedIn, setIsLoggedIn] = useState(false);
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
-  const [skills, setSkills] = useState<string[]>(["C#", "Java", "SQL"]);
+  // Load skills from localStorage or default to ["C#", "Java", "SQL"]
+  const [skills, setSkills] = useState<string[]>(() => {
+    const storedSkills = localStorage.getItem("skills");
+    return storedSkills ? JSON.parse(storedSkills) : ["C#", "Java", "SQL"];
+  });
   const [newSkill, setNewSkill] = useState("");
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [isDeleteModalOpen, setIsDeleteModalOpen] = useState(false);
@@ -18,7 +22,8 @@ const Home: React.FC = () => {
   const [projectToDelete, setProjectToDelete] = useState<string | null>(null);
   const [newProject, setNewProject] = useState({
     projectName: "",
-    projectDescription: "",
+    projectDescriptionEn: "",
+    projectDescriptionFr: "",
     projectImages: ""
   });
   const navigate = useNavigate();
@@ -26,16 +31,18 @@ const Home: React.FC = () => {
   const [projectToEdit, setProjectToEdit] = useState<{
     projectId: string;
     projectName: string;
-    projectDescription: string;
+    projectDescriptionEn: string;
+    projectDescriptionFr: string;
     projectImages: string[];
   } | null>(null);
 
-  const [projects, setProjects] = useState<{ projectId: string; projectName: string; projectDescription: string; projectImages: string[] }[]>([]);
+  const [projects, setProjects] = useState<{ projectId: string; projectName: string; projectDescriptionEn: string; projectDescriptionFr: string; projectImages: string[] }[]>([]);
 
   const openEditProjectModal = (project: {
     projectId: string;
     projectName: string;
-    projectDescription: string;
+    projectDescriptionEn: string;
+    projectDescriptionFr: string;
     projectImages: string[];
   }) => {
     setProjectToEdit(project);
@@ -62,7 +69,21 @@ const Home: React.FC = () => {
     approved: boolean;
   }[]>([]);
 
+  useEffect(() => {
+    localStorage.setItem("skills", JSON.stringify(skills));
+  }, [skills]);
 
+  const addSkill = () => {
+    if (newSkill.trim() !== "" && !skills.includes(newSkill)) {
+      setSkills([...skills, newSkill]);
+      setNewSkill(""); // Clear input after adding
+    }
+  };
+
+  // Delete a skill
+  const confirmDeleteSkill = (skill: string) => {
+    setSkills(skills.filter((s) => s !== skill));
+  };
 
 
   useEffect(() => {
@@ -144,18 +165,6 @@ const Home: React.FC = () => {
     } else {
       alert("Invalid credentials");
     }
-  };
-
-  const addSkill = () => {
-    if (newSkill.trim() !== "") {
-      setSkills([...skills, newSkill]);
-      setNewSkill("");
-    }
-  };
-
-  const confirmDeleteSkill = (skill: string) => {
-    setSkillToDelete(skill);
-    setIsDeleteModalOpen(true);
   };
 
   const deleteSkill = () => {
@@ -255,7 +264,7 @@ const Home: React.FC = () => {
       {/* Language Switch */}
       <div className="language-buttons">
         <button onClick={() => i18n.changeLanguage("en")}>English</button>
-      <button onClick={() => i18n.changeLanguage("fr")}>Français</button>
+        <button onClick={() => i18n.changeLanguage("fr")}>Français</button>
       </div>
 
       {/* Admin Login Button */}
@@ -314,14 +323,29 @@ const Home: React.FC = () => {
         </div>
       </header>
 
+      {/* Contact Section */}
+      <section className="contact">
+        <h2>{t("contact.title")}</h2>
+        <p>📧 {t("contact.email")}: <a href="mailto:ricardolfalcao.2005@gmail.com">ricardolfalcao.2005@gmail.com</a></p>
+        <p>💼 {t("contact.linkedin")}: <a href="https://linkedin.com/in/ricardo-falcao-7022862b1" target="_blank">My Linkedin</a></p>
+        <p>🐙{t("contact.github")}: <a href="https://github.com/axolot4" target="_blank">My GitHub</a></p>
+      </section>
+
       {/* Skills Section */}
       <section className="skills">
         <h2>{t("skills.title")}</h2>
+
         <ul>
           {skills.map((skill, index) => (
-            <li key={index}>{skill} {isLoggedIn && <button className="delete-skill-btn" onClick={() => confirmDeleteSkill(skill)}>🗑</button>}</li>
+            <li key={index}>
+              {skill}
+              {/* Show delete button only if admin (isLoggedIn) */}
+              {isLoggedIn && <button className="delete-skill-btn" onClick={() => confirmDeleteSkill(skill)}>🗑</button>}
+            </li>
           ))}
         </ul>
+
+        {/* Show add skill input only if admin (isLoggedIn) */}
         {isLoggedIn && (
           <div className="add-skills">
             <input
@@ -334,6 +358,7 @@ const Home: React.FC = () => {
           </div>
         )}
       </section>
+
 
       {/* Add Project Modal */}
       {isProjectModalOpen && (
@@ -348,9 +373,15 @@ const Home: React.FC = () => {
             />
             <input
               type="text"
-              placeholder="Project Description"
-              value={newProject.projectDescription}
-              onChange={(e) => setNewProject({ ...newProject, projectDescription: e.target.value })}
+              placeholder="Project Description (English)"
+              value={newProject.projectDescriptionEn}
+              onChange={(e) => setNewProject({ ...newProject, projectDescriptionEn: e.target.value })}
+            />
+            <input
+              type="text"
+              placeholder="Project Description (French)"
+              value={newProject.projectDescriptionFr}
+              onChange={(e) => setNewProject({ ...newProject, projectDescriptionFr: e.target.value })}
             />
             <input
               type="text"
@@ -377,9 +408,15 @@ const Home: React.FC = () => {
             />
             <input
               type="text"
-              placeholder="Project Description"
-              value={projectToEdit.projectDescription}
-              onChange={(e) => setProjectToEdit({ ...projectToEdit, projectDescription: e.target.value })}
+              placeholder="Project Description (English)"
+              value={projectToEdit.projectDescriptionEn}
+              onChange={(e) => setProjectToEdit({ ...projectToEdit, projectDescriptionEn: e.target.value })}
+            />
+            <input
+              type="text"
+              placeholder="Project Description (French)"
+              value={projectToEdit.projectDescriptionFr}
+              onChange={(e) => setProjectToEdit({ ...projectToEdit, projectDescriptionFr: e.target.value })}
             />
             <input
               type="text"
@@ -397,8 +434,6 @@ const Home: React.FC = () => {
           </div>
         </div>
       )}
-
-
 
       {/* Delete Project Modal */}
       {isDeleteProjectModalOpen && (
@@ -437,6 +472,48 @@ const Home: React.FC = () => {
         </div>
       )}
 
+      {/* Projects Section */}
+      <section className="projects">
+        <h2>Projects</h2>
+        <div className="projects-container">
+          {projects.map((project) => (
+            <div
+              key={project.projectId}
+              className="project-card"
+              onClick={() => navigate(`/projects/${project.projectId}`)} // Navigate to project details
+              style={{ cursor: "pointer" }}
+            >
+              <img src={project.projectImages[0]} alt={project.projectName} className="project-image" />
+              <h3>{project.projectName}</h3>
+
+              {isLoggedIn && (
+                <>
+                  <button
+                    onClick={(e) => {
+                      e.stopPropagation(); // Prevent navigation from triggering
+                      openEditProjectModal(project);
+                    }}
+                  >
+                    Edit
+                  </button>
+                  <button
+                    onClick={(e) => {
+                      e.stopPropagation(); // Prevent navigation from triggering
+                      setProjectToDelete(project.projectId);
+                      setIsDeleteProjectModalOpen(true);
+                    }}
+                  >
+                    Delete
+                  </button>
+                </>
+              )}
+            </div>
+
+          ))}
+        </div>
+        {/* Add Project Button */}
+        {isLoggedIn && <button onClick={() => setIsProjectModalOpen(true)}>Add Project</button>}
+      </section>
 
       {/* Comments Section - Positioned on the Left */}
       {isLoggedIn && (
@@ -475,59 +552,6 @@ const Home: React.FC = () => {
             </div>
           ))}
         </div>
-      </section>
-
-      {/* Projects Section */}
-      <section className="projects">
-        <h2>Projects</h2>
-        <div className="projects-container">
-          {projects.map((project) => (
-            <div
-              key={project.projectId}
-              className="project-card"
-              onClick={() => navigate(`/projects/${project.projectId}`)} // Navigate to project details
-              style={{ cursor: "pointer" }}
-            >
-              <img src={project.projectImages[0]} alt={project.projectName} className="project-image" />
-              <h3>{project.projectName}</h3>
-
-              {isLoggedIn && (
-                <>
-                  <button
-                    onClick={(e) => {
-                      e.stopPropagation(); // Prevent navigation from triggering
-                      openEditProjectModal(project);
-                    }}
-                  >
-                    Edit
-                  </button>
-                  <button
-                    onClick={(e) => {
-                      e.stopPropagation(); // Prevent navigation from triggering
-                      setProjectToDelete(project.projectId);
-                      setIsDeleteProjectModalOpen(true);
-                    }}
-                  >
-                    Delete
-                  </button>
-                </>
-              )}
-            </div>
-            
-          ))}
-        </div>
-        {/* Add Project Button */}
-        {isLoggedIn && <button onClick={() => setIsProjectModalOpen(true)}>Add Project</button>}
-      </section>
-
-
-
-      {/* Contact Section */}
-      <section className="contact">
-        <h2>{t("contact.title")}</h2>
-        <p>📧 {t("contact.email")}: <a href="mailto:ricardolfalcao.2005@gmail.com">ricardolfalcao.2005@gmail.com</a></p>
-        <p>💼 {t("contact.linkedin")}: <a href="https://linkedin.com/in/ricardo-falcao-7022862b1" target="_blank">My Linkedin</a></p>
-        <p>🐙{t("contact.github")}: <a href="https://github.com/axolot4" target="_blank">My GitHub</a></p>
       </section>
 
       {/* Footer */}

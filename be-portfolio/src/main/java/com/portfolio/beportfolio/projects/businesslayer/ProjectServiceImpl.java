@@ -51,8 +51,11 @@ public class ProjectServiceImpl implements ProjectService {
         if (projectRequestModel.getProjectName() != null) {
             existingProject.setProjectName(projectRequestModel.getProjectName());
         }
-        if (projectRequestModel.getProjectDescription() != null) {
-            existingProject.setProjectDescription(projectRequestModel.getProjectDescription());
+        if (projectRequestModel.getProjectDescriptionEn() != null) {
+            existingProject.setProjectDescriptionEn(projectRequestModel.getProjectDescriptionEn());
+        }
+        if (projectRequestModel.getProjectDescriptionFr() != null) {
+            existingProject.setProjectDescriptionFr(projectRequestModel.getProjectDescriptionFr());
         }
         if (projectRequestModel.getProjectImages() != null) {
             existingProject.setProjectImages(projectRequestModel.getProjectImages());

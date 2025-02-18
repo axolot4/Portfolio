@@ -14,6 +14,7 @@ import java.util.List;
 public class ProjectResponseModel {
     private String projectId;
     private String projectName;
-    private String projectDescription;
+    private String projectDescriptionEn;
+    private String projectDescriptionFr;
     private List<String> projectImages;
 }

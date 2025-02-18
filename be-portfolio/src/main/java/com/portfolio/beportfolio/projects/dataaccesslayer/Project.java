@@ -21,6 +21,7 @@ public class Project {
     @Indexed(unique = true)
     private ProjectIdentifier projectIdentifier;
     private String projectName;
-    private String projectDescription;
+    private String projectDescriptionEn;
+    private String projectDescriptionFr;
     private List<String> projectImages;
 }

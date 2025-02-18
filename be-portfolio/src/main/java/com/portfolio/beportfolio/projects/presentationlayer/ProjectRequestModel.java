@@ -13,6 +13,7 @@ import java.util.List;
 @Builder
 public class ProjectRequestModel {
     private String projectName;
-    private String projectDescription;
+    private String projectDescriptionEn;
+    private String projectDescriptionFr;
     private List<String> projectImages;
 }
