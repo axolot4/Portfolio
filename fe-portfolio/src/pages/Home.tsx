@@ -88,13 +88,13 @@ const Home: React.FC = () => {
 
   useEffect(() => {
     // Fetch Projects
-    fetch("http://localhost:8080/api/v1/projects")
+    fetch("https://portfolio-xgod.onrender.com/api/v1/projects")
       .then((response) => response.json())
       .then((data) => setProjects(data))
       .catch((error) => console.error("Error fetching projects:", error));
 
     // Fetch Approved Comments
-    fetch("http://localhost:8080/api/v1/comments")
+    fetch("https://portfolio-xgod.onrender.com/api/v1/comments")
       .then((response) => response.json())
       .then((data) => {
         const formattedComments = data
@@ -111,7 +111,7 @@ const Home: React.FC = () => {
 
     // Fetch Pending Comments
     if (isLoggedIn) {
-      fetch("http://localhost:8080/api/v1/comments/pending")
+      fetch("https://portfolio-xgod.onrender.com/api/v1/comments/pending")
         .then((response) => response.json())
         .then((data) => {
           const formattedPendingComments = data.map(
@@ -129,7 +129,7 @@ const Home: React.FC = () => {
   }, [isLoggedIn]);
 
   const addProject = () => {
-    fetch("http://localhost:8080/api/v1/projects", {
+    fetch("https://portfolio-xgod.onrender.com/api/v1/projects", {
       method: "POST",
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify({
@@ -148,7 +148,7 @@ const Home: React.FC = () => {
   const deleteProject = () => {
     if (!projectToDelete) return;
 
-    fetch(`http://localhost:8080/api/v1/projects/${projectToDelete}`, {
+    fetch(`https://portfolio-xgod.onrender.com/api/v1/projects/${projectToDelete}`, {
       method: "DELETE"
     })
       .then(() => {
@@ -178,7 +178,7 @@ const Home: React.FC = () => {
   const editProject = () => {
     if (!projectToEdit) return;
 
-    fetch(`http://localhost:8080/api/v1/projects/${projectToEdit.projectId}`, {
+    fetch(`https://portfolio-xgod.onrender.com/api/v1/projects/${projectToEdit.projectId}`, {
       method: "PUT",
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify({
@@ -203,7 +203,7 @@ const Home: React.FC = () => {
   };
 
   const addComment = () => {
-    fetch("http://localhost:8080/api/v1/comments", {
+    fetch("https://portfolio-xgod.onrender.com/api/v1/comments", {
       method: "POST",
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify({ ...newComment, approved: false }), // Ensure it's unapproved
@@ -220,7 +220,7 @@ const Home: React.FC = () => {
 
 
   const approveComment = (commentId: string) => {
-    fetch(`http://localhost:8080/api/v1/comments/approve/${commentId}`, {
+    fetch(`https://portfolio-xgod.onrender.com/api/v1/comments/approve/${commentId}`, {
       method: "PUT",
     })
       .then(() => {
@@ -238,7 +238,7 @@ const Home: React.FC = () => {
 
   const deleteComment = async (commentId: string) => {
     try {
-      const response = await fetch(`http://localhost:8080/api/v1/comments/${commentId}`, {
+      const response = await fetch(`https://portfolio-xgod.onrender.com/api/v1/comments/${commentId}`, {
         method: "DELETE",
       });
 

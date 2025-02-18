@@ -14,7 +14,7 @@ const ProjectDetails: React.FC = () => {
   } | null>(null);
 
   useEffect(() => {
-    fetch(`http://localhost:8080/api/v1/projects/${projectId}`)
+    fetch(`https://portfolio-xgod.onrender.com/api/v1/projects/${projectId}`)
       .then((response) => response.json())
       .then((data) => setProject(data))
       .catch((error) => console.error("Error fetching project details:", error));
