@@ -1,6 +1,6 @@
 {
   "login": {
-    "admin_login": "Connexion Admin",
+    "admin_login": "Connexion",
     "username": "Nom d'utilisateur",
     "password": "Mot de passe",
     "login_button": "Se connecter"

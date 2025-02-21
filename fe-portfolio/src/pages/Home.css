@@ -15,7 +15,10 @@ body {
 
 /* Language Buttons */
 .language-buttons {
-  text-align: right;
+  display: flex;
+  justify-content: flex-end; /* Align items to the right */
+  align-items: center;
+  gap: 10px; /* Space between buttons */
   margin-bottom: 20px;
 }
 
@@ -34,16 +37,12 @@ body {
 
 /* Admin Login Button */
 .admin-login-btn {
-  position: fixed;
-  top: 20px;
-  right: 20px;
   background-color: #bb86fc; /* Light purple */
   color: #121212; /* Dark text */
   border: none;
   padding: 10px 20px;
   border-radius: 5px;
   cursor: pointer;
-  z-index: 1000;
 }
 
 .admin-login-btn:hover {

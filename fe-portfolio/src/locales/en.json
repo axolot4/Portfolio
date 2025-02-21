@@ -1,6 +1,6 @@
 {
   "login": {
-    "admin_login": "Admin Login",
+    "admin_login": "Login",
     "username": "Username",
     "password": "Password",
     "login_button": "Login"

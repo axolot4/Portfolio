@@ -5,7 +5,9 @@ import { useTranslation } from "react-i18next";
 
 const Home: React.FC = () => {
   const { t, i18n } = useTranslation();
-  const [isLoggedIn, setIsLoggedIn] = useState(false);
+  const [isLoggedIn, setIsLoggedIn] = useState<boolean>(() => {
+    return localStorage.getItem("isLoggedIn") === "true";
+  });
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
   // Load skills from localStorage or default to ["C#", "Java", "SQL"]
@@ -68,6 +70,13 @@ const Home: React.FC = () => {
     commentContent: string;
     approved: boolean;
   }[]>([]);
+
+  useEffect(() => {
+    const storedLogin = localStorage.getItem("isLoggedIn");
+    if (storedLogin === "true") {
+      setIsLoggedIn(true);
+    }
+  }, []);
 
   useEffect(() => {
     localStorage.setItem("skills", JSON.stringify(skills));
@@ -161,11 +170,17 @@ const Home: React.FC = () => {
   const handleLogin = () => {
     if (username === "admin" && password === "password") {
       setIsLoggedIn(true);
-      setIsModalOpen(false);
+      localStorage.setItem("isLoggedIn", "true"); // Store login state
     } else {
       alert("Invalid credentials");
     }
   };
+
+  const handleLogout = () => {
+    setIsLoggedIn(false);
+    localStorage.removeItem("isLoggedIn"); // Remove login state on logout
+  };
+
 
   const deleteSkill = () => {
     if (skillToDelete) {
@@ -213,9 +228,14 @@ const Home: React.FC = () => {
         setPendingComments([...pendingComments, addedComment]); // Add to pending
         setIsCommentModalOpen(false); // Close modal
         setNewComment({ user: "", commentContent: "" }); // Reset form
+        alert("Comment posted successfully!"); // Confirmation alert
       })
-      .catch((error) => console.error("Error adding comment:", error));
+      .catch((error) => {
+        console.error("Error adding comment:", error);
+        alert("Error posting comment. Please try again.");
+      });
   };
+  
 
 
 
@@ -265,17 +285,33 @@ const Home: React.FC = () => {
       <div className="language-buttons">
         <button onClick={() => i18n.changeLanguage("en")}>English</button>
         <button onClick={() => i18n.changeLanguage("fr")}>Français</button>
+        {/* Admin Login / Logout Button */}
+        {!isLoggedIn ? (
+          <button className="admin-login-btn" onClick={handleLogin}>
+            {t("login.admin_login")}
+          </button>
+        ) : (
+          <button className="admin-logout-btn" onClick={handleLogout}>
+            Logout
+          </button>
+        )}
       </div>
 
-      {/* Admin Login Button */}
-      <button className="admin-login-btn" onClick={() => setIsModalOpen(true)}>
-        {t("login.admin_login")}
-      </button>
+      {/* Admin Login / Logout Button */}
+      {!isLoggedIn ? (
+        <button className="admin-login-btn" onClick={handleLogin}>
+          {t("login.admin_login")}
+        </button>
+      ) : (
+        <button className="admin-logout-btn" onClick={handleLogout}>
+          Logout
+        </button>
+      )}
 
       {/* Admin Login Modal */}
-      {isModalOpen && (
-        <div className="modal-overlay" onClick={() => setIsModalOpen(false)}>
-          <div className="modal" onClick={(e) => e.stopPropagation()}>
+      {!isLoggedIn && (
+        <div className="modal-overlay">
+          <div className="modal">
             <h2>{t("login.admin_login")}</h2>
             <input
               type="text"
@@ -290,7 +326,6 @@ const Home: React.FC = () => {
               onChange={(e) => setPassword(e.target.value)}
             />
             <button onClick={handleLogin}>{t("login.login_button")}</button>
-            <button className="close" onClick={() => setIsModalOpen(false)}>{t("buttons.cancel")}</button>
           </div>
         </div>
       )}
