@@ -10,13 +10,13 @@ const Home: React.FC = () => {
   });
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
+  const [isLoginModalOpen, setIsLoginModalOpen] = useState(false);
   // Load skills from localStorage or default to ["C#", "Java", "SQL"]
   const [skills, setSkills] = useState<string[]>(() => {
     const storedSkills = localStorage.getItem("skills");
     return storedSkills ? JSON.parse(storedSkills) : ["C#", "Java", "SQL"];
   });
   const [newSkill, setNewSkill] = useState("");
-  const [isModalOpen, setIsModalOpen] = useState(false);
   const [isDeleteModalOpen, setIsDeleteModalOpen] = useState(false);
   const [skillToDelete, setSkillToDelete] = useState<string | null>(null);
   const [isProjectModalOpen, setIsProjectModalOpen] = useState(false);
@@ -167,15 +167,23 @@ const Home: React.FC = () => {
       .catch((error) => console.error("Error deleting project:", error));
   };
 
+  const handleLoginButtonClick = () => {
+    setIsLoginModalOpen(true); // Open login modal only when clicked
+  };
+
+  const handleCloseLoginModal = () => {
+    setIsLoginModalOpen(false); // Close modal when login is cancelled
+  };
+
   const handleLogin = () => {
     if (username === "admin" && password === "password") {
       setIsLoggedIn(true);
-      localStorage.setItem("isLoggedIn", "true"); // Store login state
+      localStorage.setItem("isLoggedIn", "true");
+      setIsLoginModalOpen(false); // Close the modal on successful login
     } else {
       alert("Invalid credentials");
     }
   };
-
   const handleLogout = () => {
     setIsLoggedIn(false);
     localStorage.removeItem("isLoggedIn"); // Remove login state on logout
@@ -235,7 +243,7 @@ const Home: React.FC = () => {
         alert("Error posting comment. Please try again.");
       });
   };
-  
+
 
 
 
@@ -281,13 +289,37 @@ const Home: React.FC = () => {
 
   return (
     <div className="container">
+
+      {/* Admin Login Modal */}
+      {isLoginModalOpen && (
+        <div className="modal-overlay">
+          <div className="modal">
+            <h2>{t("login.admin_login")}</h2>
+            <input
+              type="text"
+              placeholder={t("login.username")}
+              value={username}
+              onChange={(e) => setUsername(e.target.value)}
+            />
+            <input
+              type="password"
+              placeholder={t("login.password")}
+              value={password}
+              onChange={(e) => setPassword(e.target.value)}
+            />
+            <button onClick={handleLogin}>{t("login.login_button")}</button>
+            <button className="close" onClick={handleCloseLoginModal}>Cancel</button>
+          </div>
+        </div>
+      )}
+
       {/* Language Switch */}
       <div className="language-buttons">
         <button onClick={() => i18n.changeLanguage("en")}>English</button>
         <button onClick={() => i18n.changeLanguage("fr")}>Français</button>
         {/* Admin Login / Logout Button */}
         {!isLoggedIn ? (
-          <button className="admin-login-btn" onClick={handleLogin}>
+          <button className="admin-login-btn" onClick={handleLoginButtonClick}>
             {t("login.admin_login")}
           </button>
         ) : (
