@@ -45,10 +45,6 @@ body {
   cursor: pointer;
 }
 
-.admin-login-btn:hover {
-  background-color: #9a67ea; /* Slightly darker purple */
-}
-
 /* Modal Styles */
 .modal-overlay {
   position: fixed;

@@ -328,18 +328,7 @@ const Home: React.FC = () => {
           </button>
         )}
       </div>
-
-      {/* Admin Login / Logout Button */}
-      {!isLoggedIn ? (
-        <button className="admin-login-btn" onClick={handleLogin}>
-          {t("login.admin_login")}
-        </button>
-      ) : (
-        <button className="admin-logout-btn" onClick={handleLogout}>
-          Logout
-        </button>
-      )}
-
+      
       {/* Delete Confirmation Modal */}
       {isDeleteModalOpen && (
         <div className="modal-overlay" onClick={() => setIsDeleteModalOpen(false)}>
