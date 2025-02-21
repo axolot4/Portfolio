@@ -340,28 +340,6 @@ const Home: React.FC = () => {
         </button>
       )}
 
-      {/* Admin Login Modal */}
-      {!isLoggedIn && (
-        <div className="modal-overlay">
-          <div className="modal">
-            <h2>{t("login.admin_login")}</h2>
-            <input
-              type="text"
-              placeholder={t("login.username")}
-              value={username}
-              onChange={(e) => setUsername(e.target.value)}
-            />
-            <input
-              type="password"
-              placeholder={t("login.password")}
-              value={password}
-              onChange={(e) => setPassword(e.target.value)}
-            />
-            <button onClick={handleLogin}>{t("login.login_button")}</button>
-          </div>
-        </div>
-      )}
-
       {/* Delete Confirmation Modal */}
       {isDeleteModalOpen && (
         <div className="modal-overlay" onClick={() => setIsDeleteModalOpen(false)}>
