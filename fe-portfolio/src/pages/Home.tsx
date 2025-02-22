@@ -424,7 +424,7 @@ const Home: React.FC = () => {
               value={newSkill}
               onChange={(e) => setNewSkill(e.target.value)}
             />
-            <button onClick={addSkill}>Add Skill</button>
+            <button className="add-skill-btn" onClick={addSkill}>Add Skill</button>
           </div>
         )}
       </section>
@@ -554,7 +554,7 @@ const Home: React.FC = () => {
 
               {isLoggedIn && (
                 <>
-                  <button
+                  <button className="edit-project-btn"
                     onClick={(e) => {
                       e.stopPropagation(); // Prevent navigation from triggering
                       openEditProjectModal(project);
@@ -562,7 +562,7 @@ const Home: React.FC = () => {
                   >
                     Edit
                   </button>
-                  <button
+                  <button className="delete-project-btn"
                     onClick={(e) => {
                       e.stopPropagation(); // Prevent navigation from triggering
                       setProjectToDelete(project.projectId);
@@ -578,7 +578,7 @@ const Home: React.FC = () => {
           ))}
         </div>
         {/* Add Project Button */}
-        {isLoggedIn && <button onClick={() => setIsProjectModalOpen(true)}>Add Project</button>}
+        {isLoggedIn && <button className="add-project-btn" onClick={() => setIsProjectModalOpen(true)}>Add Project</button>}
       </section>
 
       {/* Comments Section - Positioned on the Left */}
@@ -591,8 +591,8 @@ const Home: React.FC = () => {
                 <div key={comment.commentId} className="pending-comment-card">
                   <p className="comment-user">{comment.user}</p>
                   <p className="comment-content">{comment.commentContent}</p>
-                  <button className="approve-btn" onClick={() => approveComment(comment.commentId)}>Approve</button>
-                  <button className="delete-btn" onClick={() => deleteComment(comment.commentId)}>Delete</button>
+                  <button className="approve-comment-btn" onClick={() => approveComment(comment.commentId)}>Approve</button>
+                  <button className="delete-comment-btn" onClick={() => deleteComment(comment.commentId)}>Delete</button>
                 </div>
               ))}
             </div>
@@ -612,7 +612,7 @@ const Home: React.FC = () => {
 
                 {/* Show delete button only for logged-in admins */}
                 {isLoggedIn && (
-                  <button className="delete-btn" onClick={() => deleteComment(comment.commentId)}>
+                  <button className="delete-comment-btn" onClick={() => deleteComment(comment.commentId)}>
                     Delete
                   </button>
                 )}

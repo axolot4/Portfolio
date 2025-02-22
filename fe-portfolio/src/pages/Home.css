@@ -234,36 +234,71 @@ footer {
   /* Remove extra spacing */
 }
 
-/* Styling for All Action Buttons */
-.add-project-btn, .edit-project-btn, .add-skill-btn, .delete-skill-btn, .post-comment-btn, .approve-comment-btn, .delete-comment-btn, .delete-project-btn {
-  background: linear-gradient(135deg, #bb86fc, #9a67ea); /* Gradient for a modern look */
+/* Professional Styling for Buttons */
+
+/* Add & Edit Buttons - Light Purple */
+.add-skill-btn, .add-project-btn, .edit-project-btn {
+  background-color: #bb86fc;
   color: white;
   border: none;
-  padding: 12px 20px;
+  padding: 10px 16px;
   border-radius: 6px;
-  font-weight: bold;
   font-size: 14px;
   cursor: pointer;
-  transition: all 0.3s ease-in-out;
-  text-transform: uppercase;
-  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.3);
+  transition: background 0.2s ease-in-out;
 }
 
-.add-project-btn:hover, .edit-project-btn:hover, .add-skill-btn:hover, .delete-skill-btn:hover, .post-comment-btn:hover, .approve-comment-btn:hover, .delete-comment-btn:hover, .delete-project-btn:hover {
-  background: linear-gradient(135deg, #9a67ea, #bb86fc); /* Reverse gradient on hover */
-  transform: scale(1.05);
+.add-skill-btn:hover, .add-project-btn:hover, .edit-project-btn:hover {
+  background-color: #9a67ea;
 }
 
-/* Special Styling for Delete Buttons */
-.delete-skill-btn, .delete-comment-btn, .delete-project-btn {
-  background: linear-gradient(135deg, #ff5555, #ff3333); /* Red for delete actions */
+/* Approve Button - Green */
+.approve-comment-btn {
+  background-color: #28a745;
+  color: white;
+  border: none;
+  padding: 10px 16px;
+  border-radius: 6px;
+  font-size: 14px;
+  cursor: pointer;
+  transition: background 0.2s ease-in-out;
 }
 
-.delete-skill-btn:hover, .delete-comment-btn:hover, .delete-project-btn:hover {
-  background: linear-gradient(135deg, #ff3333, #ff5555);
+.approve-comment-btn:hover {
+  background-color: #218838;
 }
 
+/* Delete Buttons - Red */
+.delete-skill-btn, .delete-project-btn, .delete-comment-btn {
+  background-color: #ff5555;
+  color: white;
+  border: none;
+  padding: 10px 16px;
+  border-radius: 6px;
+  font-size: 14px;
+  cursor: pointer;
+  transition: background 0.2s ease-in-out;
+}
 
+.delete-skill-btn:hover, .delete-project-btn:hover, .delete-comment-btn:hover {
+  background-color: #ff3333;
+}
+
+/* Post Comment Button - Light Purple */
+.post-comment-btn {
+  background-color: #bb86fc;
+  color: white;
+  border: none;
+  padding: 10px 16px;
+  border-radius: 6px;
+  font-size: 14px;
+  cursor: pointer;
+  transition: background 0.2s ease-in-out;
+}
+
+.post-comment-btn:hover {
+  background-color: #9a67ea;
+}
 
 
 /* Modal Styles */
