@@ -48,15 +48,26 @@ body {
 .language-buttons {
   display: flex;
   gap: 10px;
+  margin-left: 20px;
 }
 
-.lang-btn, .admin-login-btn, .admin-logout-btn {
+.lang-btn {
+  background: none;
+  border: none;
+  color: #bb86fc; /* Light purple text */
+  cursor: pointer;
+  font-size: 16px;
+  text-decoration: none;
+}
+
+.admin-login-btn, .admin-logout-btn {
   background: #555;
   color: white;
   border: none;
   padding: 8px 12px;
   cursor: pointer;
   border-radius: 4px;
+  margin-left: 20px; /* Added margin to prevent overlap with scrollbar */
 }
 
 .lang-btn:hover, .admin-login-btn:hover, .admin-logout-btn:hover {
@@ -71,6 +82,7 @@ body {
   border: none;
   font-size: 24px;
   cursor: pointer;
+  margin-left: 20px;
 }
 
 @media screen and (max-width: 768px) {
@@ -99,18 +111,21 @@ html {
   scroll-behavior: smooth;
 }
 
-/* Sections styling */
+/* Sections Styling */
 section {
   padding: 60px 20px;
   margin-top: 60px;
+  background-color: #1e1e1e; /* Lighter dark background */
+  border-radius: 10px;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.3);
 }
 
 .hero {
-  background: #1e1e1e;
   text-align: center;
   padding: 100px 20px;
   border-radius: 10px;
   margin-bottom: 40px;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.3);
 }
 
 .profile-pic {

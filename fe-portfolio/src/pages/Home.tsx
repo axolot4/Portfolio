@@ -296,16 +296,16 @@ const Home: React.FC = () => {
 
       {/* Responsive Navbar */}
       <nav className="navbar">
-        <div className="logo">My Portfolio</div>
+        <div className="logo">Ricardo Lau Falcao</div>
         <button className="menu-toggle" onClick={toggleNav}>
           ☰
         </button>
         <ul className={isNavOpen ? "nav-links open" : "nav-links"}>
-          <li><a href="#home">{t("homepage.title")}</a></li>
+          <li><a href="#home">Portolio</a></li>
+          <li><a href="#contact">{t("contact.title")}</a></li>
           <li><a href="#skills">{t("skills.title")}</a></li>
           <li><a href="#projects">{t("projects.title")}</a></li>
           <li><a href="#comments">{t("comments.title")}</a></li>
-          <li><a href="#contact">{t("contact.title")}</a></li>
           {/* Language Switch */}
           <div className="language-buttons">
             <button onClick={() => i18n.changeLanguage("en")}>English</button>
