@@ -234,71 +234,70 @@ footer {
   /* Remove extra spacing */
 }
 
-/* Professional Styling for Buttons */
-
 /* Add & Edit Buttons - Light Purple */
 .add-skill-btn, .add-project-btn, .edit-project-btn {
-  background-color: #bb86fc;
-  color: white;
+  background: none;
+  color: #bb86fc;
   border: none;
-  padding: 10px 16px;
-  border-radius: 6px;
   font-size: 14px;
   cursor: pointer;
-  transition: background 0.2s ease-in-out;
+  transition: color 0.2s ease-in-out;
+  text-decoration: none;
 }
 
 .add-skill-btn:hover, .add-project-btn:hover, .edit-project-btn:hover {
-  background-color: #9a67ea;
+  color: #9a67ea;
+  text-decoration: underline;
 }
 
 /* Approve Button - Green */
 .approve-comment-btn {
-  background-color: #28a745;
-  color: white;
+  background: none;
+  color: #28a745;
   border: none;
-  padding: 10px 16px;
-  border-radius: 6px;
   font-size: 14px;
   cursor: pointer;
-  transition: background 0.2s ease-in-out;
+  transition: color 0.2s ease-in-out;
+  text-decoration: none;
 }
 
 .approve-comment-btn:hover {
-  background-color: #218838;
+  color: #218838;
+  text-decoration: underline;
 }
 
 /* Delete Buttons - Red */
 .delete-skill-btn, .delete-project-btn, .delete-comment-btn {
-  background-color: #ff5555;
-  color: white;
+  background: none;
+  color: #ff5555;
   border: none;
-  padding: 10px 16px;
-  border-radius: 6px;
   font-size: 14px;
   cursor: pointer;
-  transition: background 0.2s ease-in-out;
+  transition: color 0.2s ease-in-out;
+  text-decoration: none;
 }
 
 .delete-skill-btn:hover, .delete-project-btn:hover, .delete-comment-btn:hover {
-  background-color: #ff3333;
+  color: #ff3333;
+  text-decoration: underline;
 }
 
 /* Post Comment Button - Light Purple */
 .post-comment-btn {
-  background-color: #bb86fc;
-  color: white;
+  background: none;
+  color: #bb86fc;
   border: none;
-  padding: 10px 16px;
-  border-radius: 6px;
   font-size: 14px;
   cursor: pointer;
-  transition: background 0.2s ease-in-out;
+  transition: color 0.2s ease-in-out;
+  text-decoration: none;
 }
 
 .post-comment-btn:hover {
-  background-color: #9a67ea;
+  color: #9a67ea;
+  text-decoration: underline;
 }
+
 
 
 /* Modal Styles */
