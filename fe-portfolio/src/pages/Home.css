@@ -200,10 +200,17 @@ footer {
   padding: 0;
 }
 
+/* Comment User Styling */
 .comment-user {
   font-weight: bold;
   color: #bb86fc; /* Light purple */
+  margin-bottom: 2px; /* Reduce spacing between user and comment */
 }
+
+.comment-content {
+  margin-top: 0; /* Remove extra spacing */
+}
+
 
 
 /* Modal Styles */
@@ -234,16 +241,26 @@ footer {
   color: #e0e0e0; /* Light text */
 }
 
+/* Modal Input Styling */
 .modal input,
 .modal textarea {
-  width: 100%;
-  padding: 10px;
+  width: 100%; /* Ensure input boxes fit within the modal */
+  padding: 12px; /* Larger padding for better usability */
   margin-bottom: 10px;
   border: 1px solid #333; /* Dark border */
   border-radius: 5px;
   background-color: #333; /* Dark input background */
   color: #e0e0e0; /* Light text */
+  box-sizing: border-box; /* Ensure padding does not overflow width */
 }
+
+/* Ensure textareas for descriptions are larger */
+.modal textarea {
+  resize: vertical; /* Allow vertical resizing only */
+  min-height: 200px; /* Increased height for better readability */
+  max-height: 400px; /* Prevent excessive height */
+}
+
 
 .modal input::placeholder,
 .modal textarea::placeholder {
