@@ -13,116 +13,102 @@ body {
   padding: 20px;
 }
 
-/* Language Buttons */
-.language-buttons {
-  display: flex;
-  justify-content: flex-end; /* Align items to the right */
-  align-items: center;
-  gap: 10px; /* Space between buttons */
-  margin-bottom: 20px;
-}
-
-.language-buttons button {
-  background: none;
-  border: none;
-  color: #bb86fc; /* Light purple for accents */
-  cursor: pointer;
-  font-size: 16px;
-  margin-left: 10px;
-}
-
-.language-buttons button:hover {
-  text-decoration: underline;
-}
-
-/* Admin Login Button */
-.admin-login-btn {
-  background-color: #bb86fc; /* Light purple */
-  color: #121212; /* Dark text */
-  border: none;
-  padding: 10px 20px;
-  border-radius: 5px;
-  cursor: pointer;
-}
-
-/* Modal Styles */
-.modal-overlay {
+/* Navbar */
+.navbar {
   position: fixed;
   top: 0;
   left: 0;
   width: 100%;
-  height: 100%;
-  background-color: rgba(0, 0, 0, 0.7); /* Dark overlay */
+  background: #1e1e1e;
+  color: white;
   display: flex;
-  justify-content: center;
+  justify-content: space-between;
   align-items: center;
+  padding: 15px 20px;
   z-index: 1000;
 }
 
-.modal {
-  background-color: #1e1e1e; /* Dark modal background */
-  padding: 20px;
-  border-radius: 10px;
-  width: 90%;
-  max-width: 500px;
-  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.3);
+.nav-links {
+  list-style: none;
+  display: flex;
+  align-items: center;
 }
 
-.modal h2 {
-  margin-top: 0;
-  color: #e0e0e0; /* Light text */
+.nav-links li {
+  margin: 0 15px;
 }
 
-.modal input,
-.modal textarea {
-  width: 100%;
-  padding: 10px;
-  margin-bottom: 10px;
-  border: 1px solid #333; /* Dark border */
-  border-radius: 5px;
-  background-color: #333; /* Dark input background */
-  color: #e0e0e0; /* Light text */
+.nav-links a {
+  color: white;
+  text-decoration: none;
+  font-size: 18px;
 }
 
-.modal input::placeholder,
-.modal textarea::placeholder {
-  color: #888; /* Placeholder text */
+/* Language & Login Buttons */
+.language-buttons {
+  display: flex;
+  gap: 10px;
 }
 
-.modal button {
-  background-color: #bb86fc; /* Light purple */
-  color: #121212; /* Dark text */
+.lang-btn, .admin-login-btn, .admin-logout-btn {
+  background: #555;
+  color: white;
   border: none;
-  padding: 10px 20px;
-  border-radius: 5px;
+  padding: 8px 12px;
   cursor: pointer;
-  margin-right: 10px;
+  border-radius: 4px;
 }
 
-.modal button.close {
-  background-color: #333; /* Dark button */
-  color: #e0e0e0; /* Light text */
+.lang-btn:hover, .admin-login-btn:hover, .admin-logout-btn:hover {
+  background: #777;
 }
 
-.modal button.close:hover {
-  background-color: #444; /* Slightly lighter dark */
+/* Responsive Navbar */
+.menu-toggle {
+  display: none;
+  background: none;
+  color: white;
+  border: none;
+  font-size: 24px;
+  cursor: pointer;
 }
 
-.modal button.delete-btn {
-  background-color: #ff5555; /* Red for delete actions */
-  color: #121212; /* Dark text */
+@media screen and (max-width: 768px) {
+  .menu-toggle {
+    display: block;
+  }
+
+  .nav-links {
+    display: none;
+    flex-direction: column;
+    background: #444;
+    position: absolute;
+    top: 60px;
+    right: 0;
+    width: 200px;
+    padding: 10px;
+  }
+
+  .nav-links.open {
+    display: flex;
+  }
 }
 
-.modal button.delete-btn:hover {
-  background-color: #ff3333; /* Brighter red */
+/* Smooth scrolling */
+html {
+  scroll-behavior: smooth;
 }
 
-/* Header Section */
+/* Sections styling */
+section {
+  padding: 60px 20px;
+  margin-top: 60px;
+}
+
 .hero {
+  background: #1e1e1e;
   text-align: center;
-  padding: 50px 20px;
-  background-color: #1e1e1e; /* Dark background */
-  color: #e0e0e0; /* Light text */
+  padding: 100px 20px;
   border-radius: 10px;
   margin-bottom: 40px;
 }
@@ -144,104 +130,7 @@ body {
   margin-bottom: 20px;
 }
 
-.cv-section {
-  margin-top: 20px;
-}
-
-.cv-buttons {
-  display: flex;
-  justify-content: center;
-  gap: 10px;
-}
-
-.cv-buttons .download-btn {
-  background-color: #bb86fc; /* Light purple */
-  color: #121212; /* Dark text */
-  border: none;
-  padding: 10px 20px;
-  border-radius: 5px;
-  text-decoration: none;
-  cursor: pointer;
-}
-
-.cv-buttons .download-btn:hover {
-  background-color: #9a67ea; /* Slightly darker purple */
-}
-
-/* Skills Section */
-.skills {
-  margin-bottom: 40px;
-}
-
-.skills h2 {
-  text-align: center;
-  margin-bottom: 20px;
-}
-
-.skills ul {
-  list-style: none;
-  padding: 0;
-  display: flex;
-  flex-wrap: wrap;
-  justify-content: center;
-  gap: 10px;
-}
-
-.skills ul li {
-  background-color: #1e1e1e; /* Dark background */
-  padding: 10px 20px;
-  border-radius: 5px;
-  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.3);
-  display: flex;
-  align-items: center;
-  gap: 10px;
-}
-
-.skills ul li button.delete-skill-btn {
-  background: none;
-  border: none;
-  color: #ff5555; /* Red for delete */
-  cursor: pointer;
-}
-
-.add-skills {
-  display: flex;
-  justify-content: center;
-  margin-top: 20px;
-  gap: 10px;
-}
-
-.add-skills input {
-  padding: 10px;
-  border: 1px solid #333; /* Dark border */
-  border-radius: 5px;
-  background-color: #333; /* Dark input background */
-  color: #e0e0e0; /* Light text */
-}
-
-.add-skills button {
-  background-color: #bb86fc; /* Light purple */
-  color: #121212; /* Dark text */
-  border: none;
-  padding: 10px 20px;
-  border-radius: 5px;
-  cursor: pointer;
-}
-
-.add-skills button:hover {
-  background-color: #9a67ea; /* Slightly darker purple */
-}
-
 /* Projects Section */
-.projects {
-  margin-bottom: 40px;
-}
-
-.projects h2 {
-  text-align: center;
-  margin-bottom: 20px;
-}
-
 .projects-container {
   display: grid;
   grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
@@ -249,11 +138,11 @@ body {
 }
 
 .project-card {
-  background-color: #1e1e1e; /* Dark background */
+  background-color: #1e1e1e;
   padding: 20px;
   border-radius: 10px;
-  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.3);
   text-align: center;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.3);
 }
 
 .project-image {
@@ -265,174 +154,15 @@ body {
 }
 
 .project-card h3 {
-  margin: 10px 0;
-  color: #e0e0e0; /* Light text */
-}
-
-.project-card button {
-  background-color: #bb86fc; /* Light purple */
-  color: #121212; /* Dark text */
-  border: none;
-  padding: 5px 10px;
-  border-radius: 5px;
-  cursor: pointer;
-  margin: 5px;
-}
-
-.project-card button:hover {
-  background-color: #9a67ea; /* Slightly darker purple */
-}
-
-/* Comments Section */
-.comments-section {
-  margin-bottom: 40px;
-}
-
-.comments-section h2 {
-  text-align: center;
-  margin-bottom: 20px;
-}
-
-.post-comment-btn {
-  background-color: #bb86fc; /* Light purple */
-  color: #121212; /* Dark text */
-  border: none;
-  padding: 10px 20px;
-  border-radius: 5px;
-  cursor: pointer;
-  margin-bottom: 20px;
-}
-
-.post-comment-btn:hover {
-  background-color: #9a67ea; /* Slightly darker purple */
-}
-
-.comments-list {
-  display: flex;
-  flex-direction: column;
-  gap: 10px;
-}
-
-.comment-card {
-  background-color: #1e1e1e; /* Dark background */
-  padding: 15px;
-  border-radius: 5px;
-  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.3);
-}
-
-.comment-user {
-  font-weight: bold;
-  margin-bottom: 5px;
-  color: #e0e0e0; /* Light text */
-}
-
-.comment-content {
-  margin-bottom: 10px;
-  color: #e0e0e0; /* Light text */
-}
-
-.comment-card button.delete-btn {
-  background-color: #ff5555; /* Red for delete */
-  color: #121212; /* Dark text */
-  border: none;
-  padding: 5px 10px;
-  border-radius: 5px;
-  cursor: pointer;
-}
-
-.comment-card button.delete-btn:hover {
-  background-color: #ff3333; /* Brighter red */
-}
-
-/* Admin Comments Section */
-.admin-comments {
-  margin-bottom: 40px;
-}
-
-.admin-comments h2 {
-  text-align: center;
-  margin-bottom: 20px;
-}
-
-.pending-comments-list {
-  display: flex;
-  flex-direction: column;
-  gap: 10px;
-}
-
-.pending-comment-card {
-  background-color: #1e1e1e; /* Dark background */
-  padding: 15px;
-  border-radius: 5px;
-  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.3);
-}
-
-.pending-comment-card button.approve-btn {
-  background-color: #28a745; /* Green for approve */
-  color: #121212; /* Dark text */
-  border: none;
-  padding: 5px 10px;
-  border-radius: 5px;
-  cursor: pointer;
-  margin-right: 5px;
-}
-
-.pending-comment-card button.approve-btn:hover {
-  background-color: #218838; /* Slightly darker green */
-}
-
-/* Contact Section */
-.contact {
-  text-align: center;
-  margin-bottom: 40px;
-}
-
-.contact h2 {
-  margin-bottom: 20px;
-}
-
-.contact p {
-  margin-bottom: 10px;
-}
-
-.contact a {
-  color: #bb86fc; /* Light purple */
-  text-decoration: none;
-}
-
-.contact a:hover {
-  text-decoration: underline;
+  color: #e0e0e0;
 }
 
 /* Footer */
 footer {
   text-align: center;
   padding: 20px;
-  background-color: #1e1e1e; /* Dark background */
-  color: #e0e0e0; /* Light text */
+  background-color: #1e1e1e;
+  color: #e0e0e0;
   border-radius: 10px;
   margin-top: 40px;
-}
-
-footer p {
-  margin: 0;
-}
-
-/* Modal Input and Textarea Styles */
-.modal input,
-.modal textarea {
-  width: calc(100% - 20px); /* Adjust width to account for padding */
-  padding: 10px;
-  margin-bottom: 10px;
-  border: 1px solid #333; /* Dark border */
-  border-radius: 5px;
-  background-color: #333; /* Dark input background */
-  color: #e0e0e0; /* Light text */
-  box-sizing: border-box; /* Ensure padding is included in the width */
-}
-
-/* Ensure textarea doesn't overflow */
-.modal textarea {
-  resize: vertical; /* Allow vertical resizing only */
-  min-height: 100px; /* Set a minimum height */
 }

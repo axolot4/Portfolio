@@ -71,6 +71,10 @@ const Home: React.FC = () => {
     approved: boolean;
   }[]>([]);
 
+  const [isNavOpen, setIsNavOpen] = useState(false);
+
+  const toggleNav = () => setIsNavOpen(!isNavOpen);
+
   useEffect(() => {
     const storedLogin = localStorage.getItem("isLoggedIn");
     if (storedLogin === "true") {
@@ -290,6 +294,37 @@ const Home: React.FC = () => {
   return (
     <div className="container">
 
+      {/* Responsive Navbar */}
+      <nav className="navbar">
+        <div className="logo">My Portfolio</div>
+        <button className="menu-toggle" onClick={toggleNav}>
+          ☰
+        </button>
+        <ul className={isNavOpen ? "nav-links open" : "nav-links"}>
+          <li><a href="#home">{t("homepage.title")}</a></li>
+          <li><a href="#skills">{t("skills.title")}</a></li>
+          <li><a href="#projects">{t("projects.title")}</a></li>
+          <li><a href="#comments">{t("comments.title")}</a></li>
+          <li><a href="#contact">{t("contact.title")}</a></li>
+          {/* Language Switch */}
+          <div className="language-buttons">
+            <button onClick={() => i18n.changeLanguage("en")}>English</button>
+            <button onClick={() => i18n.changeLanguage("fr")}>Français</button>
+            {/* Admin Login / Logout Button */}
+            {!isLoggedIn ? (
+              <button className="admin-login-btn" onClick={handleLoginButtonClick}>
+                {t("login.admin_login")}
+              </button>
+            ) : (
+              <button className="admin-logout-btn" onClick={handleLogout}>
+                Logout
+              </button>
+            )}
+          </div>
+
+        </ul>
+      </nav>
+
       {/* Admin Login Modal */}
       {isLoginModalOpen && (
         <div className="modal-overlay">
@@ -313,22 +348,6 @@ const Home: React.FC = () => {
         </div>
       )}
 
-      {/* Language Switch */}
-      <div className="language-buttons">
-        <button onClick={() => i18n.changeLanguage("en")}>English</button>
-        <button onClick={() => i18n.changeLanguage("fr")}>Français</button>
-        {/* Admin Login / Logout Button */}
-        {!isLoggedIn ? (
-          <button className="admin-login-btn" onClick={handleLoginButtonClick}>
-            {t("login.admin_login")}
-          </button>
-        ) : (
-          <button className="admin-logout-btn" onClick={handleLogout}>
-            Logout
-          </button>
-        )}
-      </div>
-      
       {/* Delete Confirmation Modal */}
       {isDeleteModalOpen && (
         <div className="modal-overlay" onClick={() => setIsDeleteModalOpen(false)}>
@@ -342,7 +361,7 @@ const Home: React.FC = () => {
       )}
 
       {/* Header Section */}
-      <header className="hero">
+      <header id="home" className="hero">
         <div className="hero-content">
           <img src="/measf.jpg" alt="Your Name" className="profile-pic" />
           <h1>{t("homepage.welcome_message")}</h1>
@@ -358,7 +377,7 @@ const Home: React.FC = () => {
       </header>
 
       {/* Contact Section */}
-      <section className="contact">
+      <section id="contact" className="contact">
         <h2>{t("contact.title")}</h2>
         <p>📧 {t("contact.email")}: <a href="mailto:ricardolfalcao.2005@gmail.com">ricardolfalcao.2005@gmail.com</a></p>
         <p>💼 {t("contact.linkedin")}: <a href="https://linkedin.com/in/ricardo-falcao-7022862b1" target="_blank">My Linkedin</a></p>
@@ -366,7 +385,7 @@ const Home: React.FC = () => {
       </section>
 
       {/* Skills Section */}
-      <section className="skills">
+      <section id="skills" className="skills">
         <h2>{t("skills.title")}</h2>
 
         <ul>
@@ -507,7 +526,7 @@ const Home: React.FC = () => {
       )}
 
       {/* Projects Section */}
-      <section className="projects">
+      <section id="projects" className="projects">
         <h2>Projects</h2>
         <div className="projects-container">
           {projects.map((project) => (
@@ -550,42 +569,44 @@ const Home: React.FC = () => {
       </section>
 
       {/* Comments Section - Positioned on the Left */}
-      {isLoggedIn && (
-        <section className="admin-comments">
-          <h2>Pending Comments</h2>
-          <div className="pending-comments-list">
-            {pendingComments.map((comment) => (
-              <div key={comment.commentId} className="pending-comment-card">
+      <section id="comments" className="whole-comments-section">
+        {isLoggedIn && (
+          <section className="admin-comments">
+            <h2>Pending Comments</h2>
+            <div className="pending-comments-list">
+              {pendingComments.map((comment) => (
+                <div key={comment.commentId} className="pending-comment-card">
+                  <p className="comment-user">{comment.user}</p>
+                  <p className="comment-content">{comment.commentContent}</p>
+                  <button className="approve-btn" onClick={() => approveComment(comment.commentId)}>Approve</button>
+                  <button className="delete-btn" onClick={() => deleteComment(comment.commentId)}>Delete</button>
+                </div>
+              ))}
+            </div>
+          </section>
+        )}
+
+        <section className="comments-section">
+          <h2>{t("comments.title")}</h2>
+          <button className="post-comment-btn" onClick={() => setIsCommentModalOpen(true)}>
+            {t("comments.add_comment")}
+          </button>
+          <div className="comments-list">
+            {comments.map((comment) => (
+              <div key={comment.commentId} className="comment-card">
                 <p className="comment-user">{comment.user}</p>
                 <p className="comment-content">{comment.commentContent}</p>
-                <button className="approve-btn" onClick={() => approveComment(comment.commentId)}>Approve</button>
-                <button className="delete-btn" onClick={() => deleteComment(comment.commentId)}>Delete</button>
+
+                {/* Show delete button only for logged-in admins */}
+                {isLoggedIn && (
+                  <button className="delete-btn" onClick={() => deleteComment(comment.commentId)}>
+                    Delete
+                  </button>
+                )}
               </div>
             ))}
           </div>
         </section>
-      )}
-
-      <section className="comments-section">
-        <h2>{t("comments.title")}</h2>
-        <button className="post-comment-btn" onClick={() => setIsCommentModalOpen(true)}>
-          {t("comments.add_comment")}
-        </button>
-        <div className="comments-list">
-          {comments.map((comment) => (
-            <div key={comment.commentId} className="comment-card">
-              <p className="comment-user">{comment.user}</p>
-              <p className="comment-content">{comment.commentContent}</p>
-
-              {/* Show delete button only for logged-in admins */}
-              {isLoggedIn && (
-                <button className="delete-btn" onClick={() => deleteComment(comment.commentId)}>
-                  Delete
-                </button>
-              )}
-            </div>
-          ))}
-        </div>
       </section>
 
       {/* Footer */}
