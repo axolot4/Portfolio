@@ -67,7 +67,7 @@ body {
   padding: 8px 12px;
   cursor: pointer;
   border-radius: 4px;
-  margin-left: 20px; /* Added margin to prevent overlap with scrollbar */
+  margin-right: 50px; /* Added margin to prevent overlap with scrollbar */
 }
 
 .lang-btn:hover, .admin-login-btn:hover, .admin-logout-btn:hover {
@@ -82,7 +82,7 @@ body {
   border: none;
   font-size: 24px;
   cursor: pointer;
-  margin-left: 100px;
+  margin-right: 50px;
 }
 
 @media screen and (max-width: 768px) {
@@ -185,7 +185,8 @@ footer {
   background-color: #bb86fc; /* Light purple */
   color: #121212; /* Dark text */
   border: none;
-  padding: 30px 25px;
+  margin: 0 20px;
+  padding: 12px 25px;
   border-radius: 6px;
   text-decoration: none;
   font-weight: bold;

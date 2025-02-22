@@ -141,6 +141,23 @@ const Home: React.FC = () => {
     }
   }, [isLoggedIn]);
 
+  const handleNavClick = (event: React.MouseEvent<HTMLAnchorElement>, sectionId: string) => {
+    event.preventDefault(); // Prevent default anchor behavior
+  
+    const section = document.getElementById(sectionId);
+    if (section) {
+      const offset = section.getBoundingClientRect().top + window.scrollY - (window.innerHeight / 2) + (section.offsetHeight / 2);
+      window.scrollTo({
+        top: offset,
+        behavior: "smooth"
+      });
+    }
+  
+    // Close navbar on mobile after clicking a link
+    setIsNavOpen(false);
+  };
+  
+
   const addProject = () => {
     fetch("https://portfolio-xgod.onrender.com/api/v1/projects", {
       method: "POST",
@@ -301,17 +318,18 @@ const Home: React.FC = () => {
           ☰
         </button>
         <ul className={isNavOpen ? "nav-links open" : "nav-links"}>
-          <li><a href="#home">Portolio</a></li>
-          <li><a href="#contact">{t("contact.title")}</a></li>
-          <li><a href="#skills">{t("skills.title")}</a></li>
-          <li><a href="#projects">{t("projects.title")}</a></li>
-          <li><a href="#comments">{t("comments.title")}</a></li>
+          <li><a href="#home" onClick={(e) => handleNavClick(e, "home")}>Portolio</a></li>
+          <li><a href="#contact" onClick={(e) => handleNavClick(e, "contact")}>{t("contact.title")}</a></li>
+          <li><a href="#skills" onClick={(e) => handleNavClick(e, "skills")}>{t("skills.title")}</a></li>
+          <li><a href="#projects" onClick={(e) => handleNavClick(e, "projects")}>{t("projects.title")}</a></li>
+          <li><a href="#comments" onClick={(e) => handleNavClick(e, "comments")}>{t("comments.title")}</a></li>
           {/* Language Switch */}
           <div className="language-buttons">
             <button onClick={() => i18n.changeLanguage("en")}>English</button>
             <button onClick={() => i18n.changeLanguage("fr")}>Français</button>
-            {/* Admin Login / Logout Button */}
-            {!isLoggedIn ? (
+          </div>
+          {/* Admin Login / Logout Button */}
+          {!isLoggedIn ? (
               <button className="admin-login-btn" onClick={handleLoginButtonClick}>
                 {t("login.admin_login")}
               </button>
@@ -320,7 +338,6 @@ const Home: React.FC = () => {
                 Logout
               </button>
             )}
-          </div>
 
         </ul>
       </nav>
