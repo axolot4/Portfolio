@@ -519,7 +519,7 @@ const Home: React.FC = () => {
 
       {isCommentModalOpen && (
         <div className="modal-overlay">
-          <div className="comment-modal">
+          <div className="modal comment-modal">
             <h2>Post a Comment</h2>
             <input
               type="text"

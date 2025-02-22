@@ -348,7 +348,8 @@ footer {
 
 /* Ensure textareas for descriptions are larger */
 .add-project-modal textarea,
-.edit-project-modal textarea {
+.edit-project-modal textarea
+.comment-modal textarea {
   resize: vertical; /* Allow vertical resizing only */
   min-height: 200px; /* Increased height for better readability */
   max-height: 400px; /* Prevent excessive height */
@@ -357,18 +358,11 @@ footer {
 
 /* Ensure inputs in project modals have correct styling */
 .add-project-modal input,
-.edit-project-modal input {
+.edit-project-modal input 
+.comment-modal input {
   width: 100%;
   /* Ensure full width inside modal */
 }
-
-/* Enlarged Textarea for Comment Content Only */
-.comment-modal textarea {
-  resize: vertical;
-  min-height: 200px; /* Increased vertical space */
-  max-height: 400px;
-}
-
 
 
 .modal input::placeholder,
