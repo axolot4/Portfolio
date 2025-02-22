@@ -364,6 +364,14 @@ footer {
   /* Ensure full width inside modal */
 }
 
+/* Enlarged Textarea for Comment Content Only */
+.comment-modal textarea {
+  resize: vertical;
+  min-height: 200px; /* Increased vertical space */
+  max-height: 400px;
+}
+
+
 
 .modal input::placeholder,
 .modal textarea::placeholder {
