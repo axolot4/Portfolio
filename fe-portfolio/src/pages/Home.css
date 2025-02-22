@@ -234,28 +234,46 @@ footer {
   /* Remove extra spacing */
 }
 
-/* Add & Edit Buttons - Light Purple */
-.add-skill-btn, .add-project-btn, .edit-project-btn {
+/* Professional Styling for Buttons - Mixed Styles */
+
+/* Add & Edit Buttons - Light Purple (Text Only) */
+.add-skill-btn, .edit-project-btn {
   background: none;
   color: #bb86fc;
   border: none;
-  font-size: 14px;
+  font-size: 13px;
   cursor: pointer;
   transition: color 0.2s ease-in-out;
   text-decoration: none;
 }
 
-.add-skill-btn:hover, .add-project-btn:hover, .edit-project-btn:hover {
+.add-skill-btn:hover, .edit-project-btn:hover {
   color: #9a67ea;
   text-decoration: underline;
 }
 
-/* Approve Button - Green */
+/* Add Project & Post Comment - Light Purple (With Background) */
+.add-project-btn, .post-comment-btn {
+  background-color: #bb86fc;
+  color: white;
+  border: none;
+  padding: 8px 14px;
+  border-radius: 6px;
+  font-size: 13px;
+  cursor: pointer;
+  transition: background 0.2s ease-in-out;
+}
+
+.add-project-btn:hover, .post-comment-btn:hover {
+  background-color: #9a67ea;
+}
+
+/* Approve Button - Green (Text Only) */
 .approve-comment-btn {
   background: none;
   color: #28a745;
   border: none;
-  font-size: 14px;
+  font-size: 13px;
   cursor: pointer;
   transition: color 0.2s ease-in-out;
   text-decoration: none;
@@ -266,12 +284,12 @@ footer {
   text-decoration: underline;
 }
 
-/* Delete Buttons - Red */
+/* Delete Buttons - Red (Text Only) */
 .delete-skill-btn, .delete-project-btn, .delete-comment-btn {
   background: none;
   color: #ff5555;
   border: none;
-  font-size: 14px;
+  font-size: 13px;
   cursor: pointer;
   transition: color 0.2s ease-in-out;
   text-decoration: none;
@@ -279,22 +297,6 @@ footer {
 
 .delete-skill-btn:hover, .delete-project-btn:hover, .delete-comment-btn:hover {
   color: #ff3333;
-  text-decoration: underline;
-}
-
-/* Post Comment Button - Light Purple */
-.post-comment-btn {
-  background: none;
-  color: #bb86fc;
-  border: none;
-  font-size: 14px;
-  cursor: pointer;
-  transition: color 0.2s ease-in-out;
-  text-decoration: none;
-}
-
-.post-comment-btn:hover {
-  color: #9a67ea;
   text-decoration: underline;
 }
 
