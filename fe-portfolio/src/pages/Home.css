@@ -234,6 +234,36 @@ footer {
   /* Remove extra spacing */
 }
 
+/* Styling for All Action Buttons */
+.add-project-btn, .edit-project-btn, .add-skill-btn, .delete-skill-btn, .post-comment-btn, .approve-comment-btn, .delete-comment-btn, .delete-project-btn {
+  background: linear-gradient(135deg, #bb86fc, #9a67ea); /* Gradient for a modern look */
+  color: white;
+  border: none;
+  padding: 12px 20px;
+  border-radius: 6px;
+  font-weight: bold;
+  font-size: 14px;
+  cursor: pointer;
+  transition: all 0.3s ease-in-out;
+  text-transform: uppercase;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.3);
+}
+
+.add-project-btn:hover, .edit-project-btn:hover, .add-skill-btn:hover, .delete-skill-btn:hover, .post-comment-btn:hover, .approve-comment-btn:hover, .delete-comment-btn:hover, .delete-project-btn:hover {
+  background: linear-gradient(135deg, #9a67ea, #bb86fc); /* Reverse gradient on hover */
+  transform: scale(1.05);
+}
+
+/* Special Styling for Delete Buttons */
+.delete-skill-btn, .delete-comment-btn, .delete-project-btn {
+  background: linear-gradient(135deg, #ff5555, #ff3333); /* Red for delete actions */
+}
+
+.delete-skill-btn:hover, .delete-comment-btn:hover, .delete-project-btn:hover {
+  background: linear-gradient(135deg, #ff3333, #ff5555);
+}
+
+
 
 
 /* Modal Styles */
@@ -339,31 +369,3 @@ footer {
   /* Brighter red */
 }
 
-/* Admin & Action Buttons Styling */
-.admin-login-btn, .admin-logout-btn, .approve-btn, .delete-btn, .add-btn, .edit-btn {
-  background: linear-gradient(135deg, #bb86fc, #9a67ea); /* Gradient for a modern look */
-  color: white;
-  border: none;
-  padding: 10px 20px;
-  border-radius: 6px;
-  font-weight: bold;
-  font-size: 14px;
-  cursor: pointer;
-  transition: all 0.3s ease-in-out;
-  text-transform: uppercase;
-  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.3);
-}
-
-.admin-login-btn:hover, .admin-logout-btn:hover, .approve-btn:hover, .delete-btn:hover, .add-btn:hover, .edit-btn:hover {
-  background: linear-gradient(135deg, #9a67ea, #bb86fc); /* Reverse gradient on hover */
-  transform: scale(1.05);
-}
-
-/* Delete Button Special Styling */
-.delete-btn {
-  background: linear-gradient(135deg, #ff5555, #ff3333); /* Red for danger actions */
-}
-
-.delete-btn:hover {
-  background: linear-gradient(135deg, #ff3333, #ff5555);
-}
