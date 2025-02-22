@@ -28,6 +28,7 @@ body {
   align-items: center;
   padding: 15px 20px;
   z-index: 1000;
+  box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.3); /* Added shadow for depth */
 }
 
 .nav-links {
@@ -61,7 +62,7 @@ body {
   cursor: pointer;
   font-size: 16px;
   text-decoration: none;
-  margin: 0 15px;
+  margin: 0 5px;
 }
 
 .admin-login-btn,
@@ -266,35 +267,27 @@ footer {
   /* Light text */
 }
 
+/* Ensure input fields in all modals do not overflow */
 .modal input,
 .modal textarea {
-  width: 100%;
-  /* Ensure input boxes fit within the modal */
-  padding: 12px;
-  /* Larger padding for better usability */
+  width: 100%; /* Ensure input boxes fit within the modal */
+  padding: 12px; /* Larger padding for better usability */
   margin-bottom: 10px;
-  border: 1px solid #333;
-  /* Dark border */
+  border: 1px solid #333; /* Dark border */
   border-radius: 5px;
-  background-color: #333;
-  /* Dark input background */
-  color: #e0e0e0;
-  /* Light text */
-  box-sizing: border-box;
-  /* Ensure padding does not overflow width */
+  background-color: #333; /* Dark input background */
+  color: #e0e0e0; /* Light text */
+  box-sizing: border-box; /* Ensure padding does not overflow width */
 }
 
 /* Ensure textareas for descriptions are larger */
-.modal textarea,
 .add-project-modal textarea,
 .edit-project-modal textarea {
-  resize: vertical;
-  /* Allow vertical resizing only */
-  min-height: 200px;
-  /* Increased height for better readability */
-  max-height: 400px;
-  /* Prevent excessive height */
+  resize: vertical; /* Allow vertical resizing only */
+  min-height: 200px; /* Increased height for better readability */
+  max-height: 400px; /* Prevent excessive height */
 }
+
 
 /* Ensure inputs in project modals have correct styling */
 .add-project-modal input,
@@ -344,4 +337,33 @@ footer {
 .modal button.delete-btn:hover {
   background-color: #ff3333;
   /* Brighter red */
+}
+
+/* Admin & Action Buttons Styling */
+.admin-login-btn, .admin-logout-btn, .approve-btn, .delete-btn, .add-btn, .edit-btn {
+  background: linear-gradient(135deg, #bb86fc, #9a67ea); /* Gradient for a modern look */
+  color: white;
+  border: none;
+  padding: 10px 20px;
+  border-radius: 6px;
+  font-weight: bold;
+  font-size: 14px;
+  cursor: pointer;
+  transition: all 0.3s ease-in-out;
+  text-transform: uppercase;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.3);
+}
+
+.admin-login-btn:hover, .admin-logout-btn:hover, .approve-btn:hover, .delete-btn:hover, .add-btn:hover, .edit-btn:hover {
+  background: linear-gradient(135deg, #9a67ea, #bb86fc); /* Reverse gradient on hover */
+  transform: scale(1.05);
+}
+
+/* Delete Button Special Styling */
+.delete-btn {
+  background: linear-gradient(135deg, #ff5555, #ff3333); /* Red for danger actions */
+}
+
+.delete-btn:hover {
+  background: linear-gradient(135deg, #ff3333, #ff5555);
 }

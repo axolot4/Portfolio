@@ -143,7 +143,7 @@ const Home: React.FC = () => {
 
   const handleNavClick = (event: React.MouseEvent<HTMLAnchorElement>, sectionId: string) => {
     event.preventDefault(); // Prevent default anchor behavior
-  
+
     const section = document.getElementById(sectionId);
     if (section) {
       const offset = section.getBoundingClientRect().top + window.scrollY - (window.innerHeight / 2) + (section.offsetHeight / 2);
@@ -152,11 +152,11 @@ const Home: React.FC = () => {
         behavior: "smooth"
       });
     }
-  
+
     // Close navbar on mobile after clicking a link
     setIsNavOpen(false);
   };
-  
+
 
   const addProject = () => {
     fetch("https://portfolio-xgod.onrender.com/api/v1/projects", {
@@ -330,14 +330,14 @@ const Home: React.FC = () => {
           </div>
           {/* Admin Login / Logout Button */}
           {!isLoggedIn ? (
-              <button className="admin-login-btn" onClick={handleLoginButtonClick}>
-                {t("login.admin_login")}
-              </button>
-            ) : (
-              <button className="admin-logout-btn" onClick={handleLogout}>
-                Logout
-              </button>
-            )}
+            <button className="admin-login-btn" onClick={handleLoginButtonClick}>
+              {t("login.admin_login")}
+            </button>
+          ) : (
+            <button className="admin-logout-btn" onClick={handleLogout}>
+              Logout
+            </button>
+          )}
 
         </ul>
       </nav>
@@ -433,7 +433,7 @@ const Home: React.FC = () => {
       {/* Add Project Modal */}
       {isProjectModalOpen && (
         <div className="modal-overlay">
-          <div className="modal">
+          <div className="modal add-project-modal"> {/* Added specific class */}
             <h2>Add Project</h2>
             <input
               type="text"
@@ -441,14 +441,12 @@ const Home: React.FC = () => {
               value={newProject.projectName}
               onChange={(e) => setNewProject({ ...newProject, projectName: e.target.value })}
             />
-            <input
-              type="text"
+            <textarea
               placeholder="Project Description (English)"
               value={newProject.projectDescriptionEn}
               onChange={(e) => setNewProject({ ...newProject, projectDescriptionEn: e.target.value })}
             />
-            <input
-              type="text"
+            <textarea
               placeholder="Project Description (French)"
               value={newProject.projectDescriptionFr}
               onChange={(e) => setNewProject({ ...newProject, projectDescriptionFr: e.target.value })}
@@ -468,7 +466,7 @@ const Home: React.FC = () => {
       {/* Edit Project Modal */}
       {isEditProjectModalOpen && projectToEdit && (
         <div className="modal-overlay">
-          <div className="modal">
+          <div className="modal edit-project-modal"> {/* Added specific class */}
             <h2>Edit Project</h2>
             <input
               type="text"
@@ -476,14 +474,12 @@ const Home: React.FC = () => {
               value={projectToEdit.projectName}
               onChange={(e) => setProjectToEdit({ ...projectToEdit, projectName: e.target.value })}
             />
-            <input
-              type="text"
+            <textarea
               placeholder="Project Description (English)"
               value={projectToEdit.projectDescriptionEn}
               onChange={(e) => setProjectToEdit({ ...projectToEdit, projectDescriptionEn: e.target.value })}
             />
-            <input
-              type="text"
+            <textarea
               placeholder="Project Description (French)"
               value={projectToEdit.projectDescriptionFr}
               onChange={(e) => setProjectToEdit({ ...projectToEdit, projectDescriptionFr: e.target.value })}
