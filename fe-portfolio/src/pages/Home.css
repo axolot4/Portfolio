@@ -82,7 +82,7 @@ body {
   border: none;
   font-size: 24px;
   cursor: pointer;
-  margin-left: 20px;
+  margin-left: 100px;
 }
 
 @media screen and (max-width: 768px) {
@@ -113,8 +113,8 @@ html {
 
 /* Sections Styling */
 section {
-  padding: 60px 20px;
-  margin-top: 60px;
+  padding: 20px 40px;
+  margin-top: 20px;
   background-color: #1e1e1e; /* Lighter dark background */
   border-radius: 10px;
   box-shadow: 0 4px 6px rgba(0, 0, 0, 0.3);
@@ -125,7 +125,6 @@ section {
   padding: 100px 20px;
   border-radius: 10px;
   margin-bottom: 40px;
-  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.3);
 }
 
 .profile-pic {
@@ -180,4 +179,16 @@ footer {
   color: #e0e0e0;
   border-radius: 10px;
   margin-top: 40px;
+}
+
+.cv-buttons .download-btn {
+  background-color: #bb86fc; /* Light purple */
+  color: #121212; /* Dark text */
+  border: none;
+  padding: 12px 25px;
+  border-radius: 6px;
+  text-decoration: none;
+  font-weight: bold;
+  font-size: 16px;
+  transition: background 0.3s ease-in-out, transform 0.2s;
 }
