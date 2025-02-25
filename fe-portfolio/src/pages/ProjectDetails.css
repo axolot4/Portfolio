@@ -7,55 +7,56 @@
 
 /* Back Button */
 .back-btn {
-  background-color: #3498db;
-  color: white;
+  background-color: #bb86fc; /* Light purple */
+  color: #121212; /* Dark text */
   border: none;
-  padding: 10px 15px;
+  padding: 6px 12px;
   cursor: pointer;
-  margin-bottom: 20px;
-  font-size: 16px;
-  border-radius: 5px;
+  margin-bottom: 15px;
+  font-size: 14px;
+  border-radius: 4px;
   transition: background-color 0.3s ease;
 }
 
 .back-btn:hover {
-  background-color: #2980b9;
+  background-color: #9a67ea;
 }
 
 /* Project Title */
 h1 {
   text-align: center;
-  font-size: 28px;
-  margin-bottom: 15px;
+  font-size: 26px;
+  margin-bottom: 10px;
 }
 
 /* Language Toggle Buttons */
 .language-toggle {
   display: flex;
   justify-content: center;
-  gap: 15px;
-  margin-bottom: 20px;
+  gap: 10px;
+  margin-bottom: 15px;
 }
 
 .language-toggle button {
-  padding: 10px 20px;
-  font-size: 16px;
+  padding: 5px 12px;
+  font-size: 14px;
   border: none;
   cursor: pointer;
-  background-color: #ddd;
-  border-radius: 5px;
-  transition: background-color 0.3s ease, transform 0.2s;
+  background-color: #222;
+  color: #bb86fc; /* Light purple */
+  border-radius: 4px;
+  transition: background 0.3s ease, transform 0.2s;
 }
 
 .language-toggle button.active {
-  background-color: #007bff;
-  color: white;
+  background-color: #bb86fc;
+  color: #121212;
   font-weight: bold;
   transform: scale(1.05);
 }
 
 .language-toggle button:hover {
-  background-color: #0056b3;
+  background-color: #9a67ea;
   color: white;
 }
 
@@ -90,10 +91,10 @@ h1 {
 }
 
 .thumbnail {
-  width: 60px;
-  height: 60px;
+  width: 50px;
+  height: 50px;
   object-fit: cover;
-  border-radius: 5px;
+  border-radius: 4px;
   cursor: pointer;
   transition: transform 0.2s ease;
 }
@@ -105,18 +106,18 @@ h1 {
 /* Right: Description Section */
 .description-section {
   flex: 2; /* Description takes 2/3 of the width */
-  font-size: 16px;
-  line-height: 1.6;
+  font-size: 15px;
+  line-height: 1.5;
   display: flex;
   flex-direction: column;
   justify-content: center;
 }
 
 p {
-  margin-bottom: 15px;
+  margin-bottom: 12px;
 }
 
-/* Make it responsive */
+/* Responsive Design */
 @media (max-width: 768px) {
   .project-content {
     flex-direction: column;
@@ -129,5 +130,10 @@ p {
 
   .description-section {
     text-align: center;
+  }
+
+  .language-toggle {
+    flex-direction: column;
+    align-items: center;
   }
 }
