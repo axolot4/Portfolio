@@ -3,6 +3,8 @@ import com.portfolio.beportfolio.comments.dataaccesslayer.Comment;
 import com.portfolio.beportfolio.comments.dataaccesslayer.CommentRepository;
 import com.portfolio.beportfolio.projects.dataaccesslayer.Project;
 import com.portfolio.beportfolio.projects.dataaccesslayer.ProjectRepository;
+import com.portfolio.beportfolio.skills.dataaccesslayer.Skill;
+import com.portfolio.beportfolio.skills.dataaccesslayer.SkillRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.stereotype.Component;
@@ -18,6 +20,8 @@ public class DatabaseInitializer implements CommandLineRunner {
 
     @Autowired
     private CommentRepository commentRepository;
+    @Autowired
+    private SkillRepository skillRepository;
 
     @Override
     public void run(String... args) throws Exception {
@@ -74,6 +78,24 @@ public class DatabaseInitializer implements CommandLineRunner {
             commentList.add(comment1);
 
             commentRepository.saveAll(commentList);
+        }
+
+        if (skillRepository.count() == 0) {
+            List<Skill> skillList = new ArrayList<>();
+            Skill skill1 = new Skill().builder()
+                    .skillName("Java")
+                    .build();
+            skillList.add(skill1);
+            Skill skill2 = new Skill().builder()
+                    .skillName("C#")
+                    .build();
+            skillList.add(skill2);
+            Skill skill3 = new Skill().builder()
+                    .skillName("SQL")
+                    .build();
+            skillList.add(skill3);
+
+            skillRepository.saveAll(skillList);
         }
     }
 }
