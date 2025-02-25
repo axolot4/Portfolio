@@ -18,7 +18,9 @@ const ProjectDetails: React.FC = () => {
     fetch(`https://portfolio-xgod.onrender.com/api/v1/projects/${projectId}`)
       .then((response) => response.json())
       .then((data) => setProject(data))
-      .catch((error) => console.error("Error fetching project details:", error));
+      .catch((error) =>
+        console.error("Error fetching project details:", error)
+      );
   }, [projectId]);
 
   if (!project) {
@@ -27,46 +29,64 @@ const ProjectDetails: React.FC = () => {
 
   return (
     <div className="project-details-container">
-      <button className="back-btn" onClick={() => navigate("/")}>← Back to Projects</button>
+      <button className="back-btn" onClick={() => navigate("/")}>
+        ← Back to Projects
+      </button>
 
       <h1>{project.projectName}</h1>
 
       {/* Language Toggle Buttons */}
       <div className="language-toggle">
-        <button 
-          className={language === "en" ? "active" : ""} 
+        <button
+          className={language === "en" ? "active" : ""}
           onClick={() => setLanguage("en")}
         >
-          🇬🇧 English
+          English
         </button>
-        <button 
-          className={language === "fr" ? "active" : ""} 
+        <button
+          className={language === "fr" ? "active" : ""}
           onClick={() => setLanguage("fr")}
         >
-          🇫🇷 Français
+          Français
         </button>
       </div>
 
-      {/* Display only the selected language description */}
-      <p>
-        {(language === "en" ? project.projectDescriptionEn : project.projectDescriptionFr)
-          .split("<br />")
-          .map((line, index) => (
-            <React.Fragment key={index}>
-              {line}
-              <br />
-            </React.Fragment>
-        ))}
-      </p>
+      <div className="project-content">
+        {/* Left Column: Image Section */}
+        <div className="image-section">
+          <img
+            src={project.projectImages[0]}
+            alt={project.projectName}
+            className="main-image"
+          />
+          <div className="additional-images">
+            {project.projectImages.slice(1).map((img, index) => (
+              <img
+                key={index}
+                src={img}
+                alt={`Project ${index}`}
+                className="thumbnail"
+              />
+            ))}
+          </div>
+        </div>
 
-      {/* Main Image */}
-      <img src={project.projectImages[0]} alt={project.projectName} className="main-image" />
-
-      {/* Additional Images */}
-      <div className="additional-images">
-        {project.projectImages.slice(1).map((img, index) => (
-          <img key={index} src={img} alt={`Project ${index}`} className="thumbnail" />
-        ))}
+        {/* Right Column: Description Section */}
+        <div className="description-section">
+          <p>
+            {(language === "en"
+              ? project.projectDescriptionEn
+              : project.projectDescriptionFr
+            )
+              .split("<br />")
+              .map((line, index) => (
+                <React.Fragment key={index}>
+                  {line}
+                  <br />
+                </React.Fragment>
+              ))}
+          </p>
+        </div>
       </div>
     </div>
   );
