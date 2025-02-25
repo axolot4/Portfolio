@@ -11,19 +11,24 @@ const Home: React.FC = () => {
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
   const [isLoginModalOpen, setIsLoginModalOpen] = useState(false);
-  // Load skills from localStorage or default to ["C#", "Java", "SQL"]
-  const [skills, setSkills] = useState<string[]>([]);
+
+  interface Skill {
+    skillId: string;
+    skillName: string;
+  }
+  const [skills, setSkills] = useState<Skill[]>([]);
   const [newSkill, setNewSkill] = useState("");
   const [isDeleteModalOpen, setIsDeleteModalOpen] = useState(false);
   const [skillToDelete, setSkillToDelete] = useState<string | null>(null);
   const [isProjectModalOpen, setIsProjectModalOpen] = useState(false);
-  const [isDeleteProjectModalOpen, setIsDeleteProjectModalOpen] = useState(false);
+  const [isDeleteProjectModalOpen, setIsDeleteProjectModalOpen] =
+    useState(false);
   const [projectToDelete, setProjectToDelete] = useState<string | null>(null);
   const [newProject, setNewProject] = useState({
     projectName: "",
     projectDescriptionEn: "",
     projectDescriptionFr: "",
-    projectImages: ""
+    projectImages: "",
   });
   const navigate = useNavigate();
   const [isEditProjectModalOpen, setIsEditProjectModalOpen] = useState(false);
@@ -35,7 +40,15 @@ const Home: React.FC = () => {
     projectImages: string[];
   } | null>(null);
 
-  const [projects, setProjects] = useState<{ projectId: string; projectName: string; projectDescriptionEn: string; projectDescriptionFr: string; projectImages: string[] }[]>([]);
+  const [projects, setProjects] = useState<
+    {
+      projectId: string;
+      projectName: string;
+      projectDescriptionEn: string;
+      projectDescriptionFr: string;
+      projectImages: string[];
+    }[]
+  >([]);
 
   const openEditProjectModal = (project: {
     projectId: string;
@@ -48,12 +61,14 @@ const Home: React.FC = () => {
     setIsEditProjectModalOpen(true);
   };
 
-  const [comments, setComments] = useState<{
-    commentId: string;
-    user: string;
-    commentContent: string;
-    approved: boolean;
-  }[]>([]);
+  const [comments, setComments] = useState<
+    {
+      commentId: string;
+      user: string;
+      commentContent: string;
+      approved: boolean;
+    }[]
+  >([]);
 
   const [isCommentModalOpen, setIsCommentModalOpen] = useState(false);
   const [newComment, setNewComment] = useState({
@@ -61,12 +76,14 @@ const Home: React.FC = () => {
     commentContent: "",
   });
 
-  const [pendingComments, setPendingComments] = useState<{
-    commentId: string;
-    user: string;
-    commentContent: string;
-    approved: boolean;
-  }[]>([]);
+  const [pendingComments, setPendingComments] = useState<
+    {
+      commentId: string;
+      user: string;
+      commentContent: string;
+      approved: boolean;
+    }[]
+  >([]);
 
   const [isNavOpen, setIsNavOpen] = useState(false);
 
@@ -80,14 +97,14 @@ const Home: React.FC = () => {
   }, []);
 
   const addSkill = () => {
-    if (newSkill.trim() !== "" && !skills.includes(newSkill)) {
+    if (newSkill.trim() !== "" && !skills.some((skill) => skill.skillName === newSkill)) {
       fetch("https://portfolio-xgod.onrender.com/api/v1/skills", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ skill: newSkill }),
+        body: JSON.stringify({ skillName: newSkill }),
       })
         .then((response) => response.json())
-        .then((addedSkill) => {
+        .then((addedSkill: Skill) => {
           setSkills([...skills, addedSkill]);
           setNewSkill("");
         })
@@ -96,27 +113,37 @@ const Home: React.FC = () => {
   };
   
 
-  const confirmDeleteSkill = (skill: string) => {
-    fetch(`https://portfolio-xgod.onrender.com/api/v1/skills/${encodeURIComponent(skill)}`, {
-      method: "DELETE",
-    })
+  const confirmDeleteSkill = () => {
+    if (!skillToDelete) return;
+
+    fetch(
+      `https://portfolio-xgod.onrender.com/api/v1/skills/${encodeURIComponent(
+        skillToDelete
+      )}`,
+      {
+        method: "DELETE",
+      }
+    )
       .then((response) => {
         if (response.ok) {
-          setSkills((prevSkills) => prevSkills.filter((s) => s !== skill));
+          // Remove the deleted skill by filtering on skillId
+          setSkills((prevSkills) =>
+            prevSkills.filter((skill) => skill.skillId !== skillToDelete)
+          );
+          setIsDeleteModalOpen(false);
+          setSkillToDelete(null);
         } else {
           console.error("Failed to delete skill");
         }
       })
       .catch((error) => console.error("Error deleting skill:", error));
   };
-  
-
 
   useEffect(() => {
     //Fetch Skills
     fetch("https://portfolio-xgod.onrender.com/api/v1/skills")
       .then((response) => response.json())
-      .then((data) => setSkills(data))
+      .then((data: Skill[]) => setSkills(data))
       .catch((error) => console.error("Error fetching skills:", error));
     // Fetch Projects
     fetch("https://portfolio-xgod.onrender.com/api/v1/projects")
@@ -130,12 +157,19 @@ const Home: React.FC = () => {
       .then((data) => {
         const formattedComments = data
           .filter((comment: { approved: boolean }) => comment.approved) // Ensure field name matches the DB
-          .map((comment: { commentId: string; user: string; commentContent: string; approved: boolean }) => ({
-            commentId: comment.commentId,
-            user: comment.user,
-            commentContent: comment.commentContent,
-            approved: comment.approved,
-          }));
+          .map(
+            (comment: {
+              commentId: string;
+              user: string;
+              commentContent: string;
+              approved: boolean;
+            }) => ({
+              commentId: comment.commentId,
+              user: comment.user,
+              commentContent: comment.commentContent,
+              approved: comment.approved,
+            })
+          );
         setComments(formattedComments);
       })
       .catch((error) => console.error("Error fetching comments:", error));
@@ -146,7 +180,12 @@ const Home: React.FC = () => {
         .then((response) => response.json())
         .then((data) => {
           const formattedPendingComments = data.map(
-            (comment: { commentId: string; user: string; commentContent: string; approved: boolean }) => ({
+            (comment: {
+              commentId: string;
+              user: string;
+              commentContent: string;
+              approved: boolean;
+            }) => ({
               commentId: comment.commentId,
               user: comment.user,
               commentContent: comment.commentContent,
@@ -155,19 +194,28 @@ const Home: React.FC = () => {
           );
           setPendingComments(formattedPendingComments);
         })
-        .catch((error) => console.error("Error fetching pending comments:", error));
+        .catch((error) =>
+          console.error("Error fetching pending comments:", error)
+        );
     }
   }, [isLoggedIn]);
 
-  const handleNavClick = (event: React.MouseEvent<HTMLAnchorElement>, sectionId: string) => {
+  const handleNavClick = (
+    event: React.MouseEvent<HTMLAnchorElement>,
+    sectionId: string
+  ) => {
     event.preventDefault(); // Prevent default anchor behavior
 
     const section = document.getElementById(sectionId);
     if (section) {
-      const offset = section.getBoundingClientRect().top + window.scrollY - (window.innerHeight / 2) + (section.offsetHeight / 2);
+      const offset =
+        section.getBoundingClientRect().top +
+        window.scrollY -
+        window.innerHeight / 2 +
+        section.offsetHeight / 2;
       window.scrollTo({
         top: offset,
-        behavior: "smooth"
+        behavior: "smooth",
       });
     }
 
@@ -175,15 +223,16 @@ const Home: React.FC = () => {
     setIsNavOpen(false);
   };
 
-
   const addProject = () => {
     fetch("https://portfolio-xgod.onrender.com/api/v1/projects", {
       method: "POST",
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify({
         ...newProject,
-        projectImages: newProject.projectImages.split(",").map((img: String) => img.trim())
-      })
+        projectImages: newProject.projectImages
+          .split(",")
+          .map((img: String) => img.trim()),
+      }),
     })
       .then((response) => response.json())
       .then((addedProject) => {
@@ -196,11 +245,16 @@ const Home: React.FC = () => {
   const deleteProject = () => {
     if (!projectToDelete) return;
 
-    fetch(`https://portfolio-xgod.onrender.com/api/v1/projects/${projectToDelete}`, {
-      method: "DELETE"
-    })
+    fetch(
+      `https://portfolio-xgod.onrender.com/api/v1/projects/${projectToDelete}`,
+      {
+        method: "DELETE",
+      }
+    )
       .then(() => {
-        setProjects(projects.filter((proj) => proj.projectId !== projectToDelete));
+        setProjects(
+          projects.filter((proj) => proj.projectId !== projectToDelete)
+        );
         setIsDeleteProjectModalOpen(false);
       })
       .catch((error) => console.error("Error deleting project:", error));
@@ -228,30 +282,29 @@ const Home: React.FC = () => {
     localStorage.removeItem("isLoggedIn"); // Remove login state on logout
   };
 
-
-  const deleteSkill = () => {
-    if (skillToDelete) {
-      setSkills(skills.filter(skill => skill !== skillToDelete));
-      setIsDeleteModalOpen(false);
-      setSkillToDelete(null);
-    }
+  const openDeleteModal = (skillId: string) => {
+    setSkillToDelete(skillId);
+    setIsDeleteModalOpen(true);
   };
 
   const editProject = () => {
     if (!projectToEdit) return;
 
-    fetch(`https://portfolio-xgod.onrender.com/api/v1/projects/${projectToEdit.projectId}`, {
-      method: "PUT",
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({
-        ...projectToEdit,
-        projectImages: Array.isArray(projectToEdit.projectImages)
-          ? projectToEdit.projectImages // Keep it as an array
-          : String(projectToEdit.projectImages) // Ensure it's a string before calling .split(",")
-            .split(",")
-            .map((img) => img.trim()),
-      }),
-    })
+    fetch(
+      `https://portfolio-xgod.onrender.com/api/v1/projects/${projectToEdit.projectId}`,
+      {
+        method: "PUT",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({
+          ...projectToEdit,
+          projectImages: Array.isArray(projectToEdit.projectImages)
+            ? projectToEdit.projectImages // Keep it as an array
+            : String(projectToEdit.projectImages) // Ensure it's a string before calling .split(",")
+                .split(",")
+                .map((img) => img.trim()),
+        }),
+      }
+    )
       .then((response) => response.json())
       .then((updatedProject) => {
         setProjects(
@@ -283,39 +336,49 @@ const Home: React.FC = () => {
       });
   };
 
-
-
-
   const approveComment = (commentId: string) => {
-    fetch(`https://portfolio-xgod.onrender.com/api/v1/comments/approve/${commentId}`, {
-      method: "PUT",
-    })
+    fetch(
+      `https://portfolio-xgod.onrender.com/api/v1/comments/approve/${commentId}`,
+      {
+        method: "PUT",
+      }
+    )
       .then(() => {
         // Find the comment in pending list
-        const approvedComment = pendingComments.find(comment => comment.commentId === commentId);
+        const approvedComment = pendingComments.find(
+          (comment) => comment.commentId === commentId
+        );
         if (approvedComment) {
           // Remove from pending and add to approved list
-          setPendingComments(pendingComments.filter(comment => comment.commentId !== commentId));
+          setPendingComments(
+            pendingComments.filter((comment) => comment.commentId !== commentId)
+          );
           setComments([...comments, { ...approvedComment, approved: true }]); // Type-safe
         }
       })
       .catch((error) => console.error("Error approving comment:", error));
   };
 
-
   const deleteComment = async (commentId: string) => {
     try {
-      const response = await fetch(`https://portfolio-xgod.onrender.com/api/v1/comments/${commentId}`, {
-        method: "DELETE",
-      });
+      const response = await fetch(
+        `https://portfolio-xgod.onrender.com/api/v1/comments/${commentId}`,
+        {
+          method: "DELETE",
+        }
+      );
 
       if (!response.ok) {
         throw new Error("Failed to delete comment");
       }
 
       // Remove the comment from both lists
-      setPendingComments(pendingComments.filter(comment => comment.commentId !== commentId));
-      setComments(comments.filter(comment => comment.commentId !== commentId));
+      setPendingComments(
+        pendingComments.filter((comment) => comment.commentId !== commentId)
+      );
+      setComments(
+        comments.filter((comment) => comment.commentId !== commentId)
+      );
 
       console.log(`Comment ${commentId} deleted successfully`);
     } catch (error) {
@@ -324,11 +387,8 @@ const Home: React.FC = () => {
     }
   };
 
-
-
   return (
     <div className="container">
-
       {/* Responsive Navbar */}
       <nav className="navbar">
         <div className="logo">Ricardo Lau Falcao</div>
@@ -336,11 +396,31 @@ const Home: React.FC = () => {
           ☰
         </button>
         <ul className={isNavOpen ? "nav-links open" : "nav-links"}>
-          <li><a href="#home" onClick={(e) => handleNavClick(e, "home")}>Portolio</a></li>
-          <li><a href="#contact" onClick={(e) => handleNavClick(e, "contact")}>{t("contact.title")}</a></li>
-          <li><a href="#skills" onClick={(e) => handleNavClick(e, "skills")}>{t("skills.title")}</a></li>
-          <li><a href="#projects" onClick={(e) => handleNavClick(e, "projects")}>{t("projects.title")}</a></li>
-          <li><a href="#comments" onClick={(e) => handleNavClick(e, "comments")}>{t("comments.title")}</a></li>
+          <li>
+            <a href="#home" onClick={(e) => handleNavClick(e, "home")}>
+              Portolio
+            </a>
+          </li>
+          <li>
+            <a href="#contact" onClick={(e) => handleNavClick(e, "contact")}>
+              {t("contact.title")}
+            </a>
+          </li>
+          <li>
+            <a href="#skills" onClick={(e) => handleNavClick(e, "skills")}>
+              {t("skills.title")}
+            </a>
+          </li>
+          <li>
+            <a href="#projects" onClick={(e) => handleNavClick(e, "projects")}>
+              {t("projects.title")}
+            </a>
+          </li>
+          <li>
+            <a href="#comments" onClick={(e) => handleNavClick(e, "comments")}>
+              {t("comments.title")}
+            </a>
+          </li>
           {/* Language Switch */}
           <div className="language-buttons">
             <button onClick={() => i18n.changeLanguage("en")}>English</button>
@@ -348,7 +428,10 @@ const Home: React.FC = () => {
           </div>
           {/* Admin Login / Logout Button */}
           {!isLoggedIn ? (
-            <button className="admin-login-btn" onClick={handleLoginButtonClick}>
+            <button
+              className="admin-login-btn"
+              onClick={handleLoginButtonClick}
+            >
               {t("login.admin_login")}
             </button>
           ) : (
@@ -356,7 +439,6 @@ const Home: React.FC = () => {
               Logout
             </button>
           )}
-
         </ul>
       </nav>
 
@@ -378,19 +460,31 @@ const Home: React.FC = () => {
               onChange={(e) => setPassword(e.target.value)}
             />
             <button onClick={handleLogin}>{t("login.login_button")}</button>
-            <button className="close" onClick={handleCloseLoginModal}>Cancel</button>
+            <button className="close" onClick={handleCloseLoginModal}>
+              Cancel
+            </button>
           </div>
         </div>
       )}
 
       {/* Delete Confirmation Modal */}
       {isDeleteModalOpen && (
-        <div className="modal-overlay" onClick={() => setIsDeleteModalOpen(false)}>
+        <div
+          className="modal-overlay"
+          onClick={() => setIsDeleteModalOpen(false)}
+        >
           <div className="modal" onClick={(e) => e.stopPropagation()}>
             <h2>Confirm Delete</h2>
-            <p>Are you sure you want to delete "{skillToDelete}"?</p>
-            <button className="delete-btn" onClick={deleteSkill}>Yes, Delete</button>
-            <button className="cancel-btn" onClick={() => setIsDeleteModalOpen(false)}>Cancel</button>
+            <p>Are you sure you want to delete this skill?</p>
+            <button className="delete-btn" onClick={confirmDeleteSkill}>
+              Yes, Delete
+            </button>
+            <button
+              className="cancel-btn"
+              onClick={() => setIsDeleteModalOpen(false)}
+            >
+              Cancel
+            </button>
           </div>
         </div>
       )}
@@ -404,8 +498,16 @@ const Home: React.FC = () => {
           <div className="cv-section">
             <p>Download My CV</p>
             <div className="cv-buttons">
-              <a href="/assets/Resume.pdf" download className="download-btn">ENG</a>
-              <a href="/assets/Resume French.pdf" download className="download-btn">FR</a>
+              <a href="/assets/Resume.pdf" download className="download-btn">
+                ENG
+              </a>
+              <a
+                href="/assets/Resume French.pdf"
+                download
+                className="download-btn"
+              >
+                FR
+              </a>
             </div>
           </div>
         </div>
@@ -414,9 +516,27 @@ const Home: React.FC = () => {
       {/* Contact Section */}
       <section id="contact" className="contact">
         <h2>{t("contact.title")}</h2>
-        <p>📧 {t("contact.email")}: <a href="mailto:ricardolfalcao.2005@gmail.com">ricardolfalcao.2005@gmail.com</a></p>
-        <p>💼 {t("contact.linkedin")}: <a href="https://linkedin.com/in/ricardo-falcao-7022862b1" target="_blank">My Linkedin</a></p>
-        <p>🐙{t("contact.github")}: <a href="https://github.com/axolot4" target="_blank">My GitHub</a></p>
+        <p>
+          📧 {t("contact.email")}:{" "}
+          <a href="mailto:ricardolfalcao.2005@gmail.com">
+            ricardolfalcao.2005@gmail.com
+          </a>
+        </p>
+        <p>
+          💼 {t("contact.linkedin")}:{" "}
+          <a
+            href="https://linkedin.com/in/ricardo-falcao-7022862b1"
+            target="_blank"
+          >
+            My Linkedin
+          </a>
+        </p>
+        <p>
+          🐙{t("contact.github")}:{" "}
+          <a href="https://github.com/axolot4" target="_blank">
+            My GitHub
+          </a>
+        </p>
       </section>
 
       {/* Skills Section */}
@@ -424,11 +544,17 @@ const Home: React.FC = () => {
         <h2>{t("skills.title")}</h2>
 
         <ul>
-          {skills.map((skill, index) => (
-            <li key={index}>
-              {skill}
-              {/* Show delete button only if admin (isLoggedIn) */}
-              {isLoggedIn && <button className="delete-skill-btn" onClick={() => confirmDeleteSkill(skill)}>🗑</button>}
+          {skills.map((skill) => (
+            <li key={skill.skillId}>
+              {skill.skillName}
+              {isLoggedIn && (
+                <button
+                  className="delete-skill-btn"
+                  onClick={() => openDeleteModal(skill.skillId)}
+                >
+                  🗑
+                </button>
+              )}
             </li>
           ))}
         </ul>
@@ -442,41 +568,63 @@ const Home: React.FC = () => {
               value={newSkill}
               onChange={(e) => setNewSkill(e.target.value)}
             />
-            <button className="add-skill-btn" onClick={addSkill}>Add Skill</button>
+            <button className="add-skill-btn" onClick={addSkill}>
+              Add Skill
+            </button>
           </div>
         )}
       </section>
 
-
       {/* Add Project Modal */}
       {isProjectModalOpen && (
         <div className="modal-overlay">
-          <div className="modal add-project-modal"> {/* Added specific class */}
+          <div className="modal add-project-modal">
+            {" "}
+            {/* Added specific class */}
             <h2>Add Project</h2>
             <input
               type="text"
               placeholder="Project Name"
               value={newProject.projectName}
-              onChange={(e) => setNewProject({ ...newProject, projectName: e.target.value })}
+              onChange={(e) =>
+                setNewProject({ ...newProject, projectName: e.target.value })
+              }
             />
             <textarea
               placeholder="Project Description (English)"
               value={newProject.projectDescriptionEn}
-              onChange={(e) => setNewProject({ ...newProject, projectDescriptionEn: e.target.value })}
+              onChange={(e) =>
+                setNewProject({
+                  ...newProject,
+                  projectDescriptionEn: e.target.value,
+                })
+              }
             />
             <textarea
               placeholder="Project Description (French)"
               value={newProject.projectDescriptionFr}
-              onChange={(e) => setNewProject({ ...newProject, projectDescriptionFr: e.target.value })}
+              onChange={(e) =>
+                setNewProject({
+                  ...newProject,
+                  projectDescriptionFr: e.target.value,
+                })
+              }
             />
             <input
               type="text"
               placeholder="Project Images (comma-separated)"
               value={newProject.projectImages}
-              onChange={(e) => setNewProject({ ...newProject, projectImages: e.target.value })}
+              onChange={(e) =>
+                setNewProject({ ...newProject, projectImages: e.target.value })
+              }
             />
             <button onClick={addProject}>Add Project</button>
-            <button className="close" onClick={() => setIsProjectModalOpen(false)}>Cancel</button>
+            <button
+              className="close"
+              onClick={() => setIsProjectModalOpen(false)}
+            >
+              Cancel
+            </button>
           </div>
         </div>
       )}
@@ -484,37 +632,65 @@ const Home: React.FC = () => {
       {/* Edit Project Modal */}
       {isEditProjectModalOpen && projectToEdit && (
         <div className="modal-overlay">
-          <div className="modal edit-project-modal"> {/* Added specific class */}
+          <div className="modal edit-project-modal">
+            {" "}
+            {/* Added specific class */}
             <h2>Edit Project</h2>
             <input
               type="text"
               placeholder="Project Name"
               value={projectToEdit.projectName}
-              onChange={(e) => setProjectToEdit({ ...projectToEdit, projectName: e.target.value })}
+              onChange={(e) =>
+                setProjectToEdit({
+                  ...projectToEdit,
+                  projectName: e.target.value,
+                })
+              }
             />
             <textarea
               placeholder="Project Description (English)"
               value={projectToEdit.projectDescriptionEn}
-              onChange={(e) => setProjectToEdit({ ...projectToEdit, projectDescriptionEn: e.target.value })}
+              onChange={(e) =>
+                setProjectToEdit({
+                  ...projectToEdit,
+                  projectDescriptionEn: e.target.value,
+                })
+              }
             />
             <textarea
               placeholder="Project Description (French)"
               value={projectToEdit.projectDescriptionFr}
-              onChange={(e) => setProjectToEdit({ ...projectToEdit, projectDescriptionFr: e.target.value })}
+              onChange={(e) =>
+                setProjectToEdit({
+                  ...projectToEdit,
+                  projectDescriptionFr: e.target.value,
+                })
+              }
             />
             <input
               type="text"
               placeholder="Project Images (comma-separated)"
-              value={Array.isArray(projectToEdit.projectImages) ? projectToEdit.projectImages.join(", ") : ""}
+              value={
+                Array.isArray(projectToEdit.projectImages)
+                  ? projectToEdit.projectImages.join(", ")
+                  : ""
+              }
               onChange={(e) =>
                 setProjectToEdit({
                   ...projectToEdit,
-                  projectImages: e.target.value ? e.target.value.split(",").map((img) => img.trim()) : [],
+                  projectImages: e.target.value
+                    ? e.target.value.split(",").map((img) => img.trim())
+                    : [],
                 })
               }
             />
             <button onClick={editProject}>Update Project</button>
-            <button className="close" onClick={() => setIsEditProjectModalOpen(false)}>Cancel</button>
+            <button
+              className="close"
+              onClick={() => setIsEditProjectModalOpen(false)}
+            >
+              Cancel
+            </button>
           </div>
         </div>
       )}
@@ -528,7 +704,10 @@ const Home: React.FC = () => {
             <button className="delete-btn" onClick={deleteProject}>
               Yes, Delete
             </button>
-            <button className="cancel-btn" onClick={() => setIsDeleteProjectModalOpen(false)}>
+            <button
+              className="cancel-btn"
+              onClick={() => setIsDeleteProjectModalOpen(false)}
+            >
               Cancel
             </button>
           </div>
@@ -543,15 +722,24 @@ const Home: React.FC = () => {
               type="text"
               placeholder="Your Name"
               value={newComment.user}
-              onChange={(e) => setNewComment({ ...newComment, user: e.target.value })}
+              onChange={(e) =>
+                setNewComment({ ...newComment, user: e.target.value })
+              }
             />
             <textarea
               placeholder="Your Comment"
               value={newComment.commentContent}
-              onChange={(e) => setNewComment({ ...newComment, commentContent: e.target.value })}
+              onChange={(e) =>
+                setNewComment({ ...newComment, commentContent: e.target.value })
+              }
             />
             <button onClick={addComment}>Submit</button>
-            <button className="close" onClick={() => setIsCommentModalOpen(false)}>Cancel</button>
+            <button
+              className="close"
+              onClick={() => setIsCommentModalOpen(false)}
+            >
+              Cancel
+            </button>
           </div>
         </div>
       )}
@@ -567,12 +755,17 @@ const Home: React.FC = () => {
               onClick={() => navigate(`/projects/${project.projectId}`)} // Navigate to project details
               style={{ cursor: "pointer" }}
             >
-              <img src={project.projectImages[0]} alt={project.projectName} className="project-image" />
+              <img
+                src={project.projectImages[0]}
+                alt={project.projectName}
+                className="project-image"
+              />
               <h3>{project.projectName}</h3>
 
               {isLoggedIn && (
                 <>
-                  <button className="edit-project-btn"
+                  <button
+                    className="edit-project-btn"
                     onClick={(e) => {
                       e.stopPropagation(); // Prevent navigation from triggering
                       openEditProjectModal(project);
@@ -580,7 +773,8 @@ const Home: React.FC = () => {
                   >
                     Edit
                   </button>
-                  <button className="delete-project-btn"
+                  <button
+                    className="delete-project-btn"
                     onClick={(e) => {
                       e.stopPropagation(); // Prevent navigation from triggering
                       setProjectToDelete(project.projectId);
@@ -592,11 +786,17 @@ const Home: React.FC = () => {
                 </>
               )}
             </div>
-
           ))}
         </div>
         {/* Add Project Button */}
-        {isLoggedIn && <button className="add-project-btn" onClick={() => setIsProjectModalOpen(true)}>Add Project</button>}
+        {isLoggedIn && (
+          <button
+            className="add-project-btn"
+            onClick={() => setIsProjectModalOpen(true)}
+          >
+            Add Project
+          </button>
+        )}
       </section>
 
       {/* Comments Section - Positioned on the Left */}
@@ -609,8 +809,18 @@ const Home: React.FC = () => {
                 <div key={comment.commentId} className="pending-comment-card">
                   <p className="comment-user">{comment.user}</p>
                   <p className="comment-content">{comment.commentContent}</p>
-                  <button className="approve-comment-btn" onClick={() => approveComment(comment.commentId)}>Approve</button>
-                  <button className="delete-comment-btn" onClick={() => deleteComment(comment.commentId)}>Delete</button>
+                  <button
+                    className="approve-comment-btn"
+                    onClick={() => approveComment(comment.commentId)}
+                  >
+                    Approve
+                  </button>
+                  <button
+                    className="delete-comment-btn"
+                    onClick={() => deleteComment(comment.commentId)}
+                  >
+                    Delete
+                  </button>
                 </div>
               ))}
             </div>
@@ -619,7 +829,10 @@ const Home: React.FC = () => {
 
         <section className="comments-section">
           <h2>{t("comments.title")}</h2>
-          <button className="post-comment-btn" onClick={() => setIsCommentModalOpen(true)}>
+          <button
+            className="post-comment-btn"
+            onClick={() => setIsCommentModalOpen(true)}
+          >
             {t("comments.add_comment")}
           </button>
           <div className="comments-list">
@@ -630,7 +843,10 @@ const Home: React.FC = () => {
 
                 {/* Show delete button only for logged-in admins */}
                 {isLoggedIn && (
-                  <button className="delete-comment-btn" onClick={() => deleteComment(comment.commentId)}>
+                  <button
+                    className="delete-comment-btn"
+                    onClick={() => deleteComment(comment.commentId)}
+                  >
                     Delete
                   </button>
                 )}
@@ -642,7 +858,9 @@ const Home: React.FC = () => {
 
       {/* Footer */}
       <footer>
-        <p>&copy; {new Date().getFullYear()} {t("footer.copyright")}</p>
+        <p>
+          &copy; {new Date().getFullYear()} {t("footer.copyright")}
+        </p>
       </footer>
     </div>
   );
