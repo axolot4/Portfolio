@@ -3,7 +3,7 @@ import { useParams, useNavigate } from "react-router-dom";
 import "./ProjectDetails.css";
 
 const ProjectDetails: React.FC = () => {
-  const { projectId } = useParams(); // Get projectId from URL
+  const { projectId } = useParams();
   const navigate = useNavigate();
   const [project, setProject] = useState<{
     projectId: string;
@@ -12,6 +12,7 @@ const ProjectDetails: React.FC = () => {
     projectDescriptionFr: string;
     projectImages: string[];
   } | null>(null);
+  const [language, setLanguage] = useState<"en" | "fr">("en"); // State for language toggle
 
   useEffect(() => {
     fetch(`https://portfolio-xgod.onrender.com/api/v1/projects/${projectId}`)
@@ -30,25 +31,31 @@ const ProjectDetails: React.FC = () => {
 
       <h1>{project.projectName}</h1>
 
-      {/* English Description */}
-      <h2>🇬🇧 English</h2>
-      <p>
-        {project.projectDescriptionEn.split("<br />").map((line, index) => (
-          <React.Fragment key={index}>
-            {line}
-            <br />
-          </React.Fragment>
-        ))}
-      </p>
+      {/* Language Toggle Buttons */}
+      <div className="language-toggle">
+        <button 
+          className={language === "en" ? "active" : ""} 
+          onClick={() => setLanguage("en")}
+        >
+          🇬🇧 English
+        </button>
+        <button 
+          className={language === "fr" ? "active" : ""} 
+          onClick={() => setLanguage("fr")}
+        >
+          🇫🇷 Français
+        </button>
+      </div>
 
-      {/* French Description */}
-      <h2>🇫🇷 Français</h2>
+      {/* Display only the selected language description */}
       <p>
-        {project.projectDescriptionFr.split("<br />").map((line, index) => (
-          <React.Fragment key={index}>
-            {line}
-            <br />
-          </React.Fragment>
+        {(language === "en" ? project.projectDescriptionEn : project.projectDescriptionFr)
+          .split("<br />")
+          .map((line, index) => (
+            <React.Fragment key={index}>
+              {line}
+              <br />
+            </React.Fragment>
         ))}
       </p>
 

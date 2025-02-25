@@ -520,7 +520,7 @@ const Home: React.FC = () => {
         <h2>{t("contact.title")}</h2>
         <p>
           📧 {t("contact.email")}:{" "}
-          <a href="mailto:ricardolfalcao.2005@gmail.com?subject=Hello">
+          <a href="mailto:ricardolfalcao.2005@gmail.com">
             Send an email
           </a>
         </p>
