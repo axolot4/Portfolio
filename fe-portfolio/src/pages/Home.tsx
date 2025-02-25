@@ -12,10 +12,7 @@ const Home: React.FC = () => {
   const [password, setPassword] = useState("");
   const [isLoginModalOpen, setIsLoginModalOpen] = useState(false);
   // Load skills from localStorage or default to ["C#", "Java", "SQL"]
-  const [skills, setSkills] = useState<string[]>(() => {
-    const storedSkills = localStorage.getItem("skills");
-    return storedSkills ? JSON.parse(storedSkills) : ["C#", "Java", "SQL"];
-  });
+  const [skills, setSkills] = useState<string[]>([]);
   const [newSkill, setNewSkill] = useState("");
   const [isDeleteModalOpen, setIsDeleteModalOpen] = useState(false);
   const [skillToDelete, setSkillToDelete] = useState<string | null>(null);
@@ -82,24 +79,45 @@ const Home: React.FC = () => {
     }
   }, []);
 
-  useEffect(() => {
-    localStorage.setItem("skills", JSON.stringify(skills));
-  }, [skills]);
-
   const addSkill = () => {
     if (newSkill.trim() !== "" && !skills.includes(newSkill)) {
-      setSkills([...skills, newSkill]);
-      setNewSkill(""); // Clear input after adding
+      fetch("https://portfolio-xgod.onrender.com/api/v1/skills", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ skill: newSkill }),
+      })
+        .then((response) => response.json())
+        .then((addedSkill) => {
+          setSkills([...skills, addedSkill]);
+          setNewSkill("");
+        })
+        .catch((error) => console.error("Error adding skill:", error));
     }
   };
+  
 
-  // Delete a skill
   const confirmDeleteSkill = (skill: string) => {
-    setSkills(skills.filter((s) => s !== skill));
+    fetch(`https://portfolio-xgod.onrender.com/api/v1/skills/${encodeURIComponent(skill)}`, {
+      method: "DELETE",
+    })
+      .then((response) => {
+        if (response.ok) {
+          setSkills((prevSkills) => prevSkills.filter((s) => s !== skill));
+        } else {
+          console.error("Failed to delete skill");
+        }
+      })
+      .catch((error) => console.error("Error deleting skill:", error));
   };
+  
 
 
   useEffect(() => {
+    //Fetch Skills
+    fetch("https://portfolio-xgod.onrender.com/api/v1/skills")
+      .then((response) => response.json())
+      .then((data) => setSkills(data))
+      .catch((error) => console.error("Error fetching skills:", error));
     // Fetch Projects
     fetch("https://portfolio-xgod.onrender.com/api/v1/projects")
       .then((response) => response.json())
