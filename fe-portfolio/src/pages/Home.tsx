@@ -97,7 +97,10 @@ const Home: React.FC = () => {
   }, []);
 
   const addSkill = () => {
-    if (newSkill.trim() !== "" && !skills.some((skill) => skill.skillName === newSkill)) {
+    if (
+      newSkill.trim() !== "" &&
+      !skills.some((skill) => skill.skillName === newSkill)
+    ) {
       fetch("https://portfolio-xgod.onrender.com/api/v1/skills", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
@@ -111,7 +114,6 @@ const Home: React.FC = () => {
         .catch((error) => console.error("Error adding skill:", error));
     }
   };
-  
 
   const confirmDeleteSkill = () => {
     if (!skillToDelete) return;
@@ -518,8 +520,8 @@ const Home: React.FC = () => {
         <h2>{t("contact.title")}</h2>
         <p>
           📧 {t("contact.email")}:{" "}
-          <a href="mailto:ricardolfalcao.2005@gmail.com">
-            ricardolfalcao.2005@gmail.com
+          <a href="mailto:ricardolfalcao.2005@gmail.com?subject=Hello">
+            Send an email
           </a>
         </p>
         <p>
