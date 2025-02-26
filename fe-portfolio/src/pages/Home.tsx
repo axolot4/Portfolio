@@ -80,10 +80,10 @@ const Home: React.FC = () => {
 
     emailjs
       .send(
-        "your_service_id", // Replace with your EmailJS Service ID
-        "your_template_id", // Replace with your EmailJS Template ID
+        "service_10srnoj", // Replace with your EmailJS Service ID
+        "template_87mhuab", // Replace with your EmailJS Template ID
         { subject: emailSubject, message: emailMessage },
-        "your_public_key" // Replace with your EmailJS Public Key
+        "SYym02TtQq7seG8qX" // Replace with your EmailJS Public Key
       )
       .then(
         () => {
@@ -548,8 +548,8 @@ const Home: React.FC = () => {
 
       {isEmailModalOpen && (
         <div className="modal-overlay">
-          <div className="modal-content">
-            <h2>Send an Email</h2>
+          <div className="modal">
+            <h2>Mail</h2>
             <form onSubmit={sendEmail}>
               <input
                 type="text"
@@ -564,22 +564,21 @@ const Home: React.FC = () => {
                 onChange={(e) => setEmailMessage(e.target.value)}
                 required
               />
-              <button type="submit">Send</button>
-              <button type="button" onClick={() => setIsEmailModalOpen(false)}>Close</button>
+              <button type="submit" className="modal-button">Send</button>
+              <button type="button" className="modal-button close" onClick={() => setIsEmailModalOpen(false)}>Close</button>
             </form>
           </div>
         </div>
       )}
 
 
+
       {/* Contact Section */}
       <section id="contact" className="contact">
         <h2>{t("contact.title")}</h2>
         <p>
-          📧 {t("contact.email")}:{" "}
-          <a href="mailto:ricardolfalcao.2005@gmail.com">
-            Mail
-          </a>
+          📧 {t("contact.email")}:
+          <button className="email-button" onClick={() => setIsEmailModalOpen(true)}>Send an Email</button>
         </p>
         <p>
           💼 {t("contact.linkedin")}:{" "}
