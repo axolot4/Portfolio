@@ -302,48 +302,60 @@ footer {
 
 
 
-/* Modal Styles */
+/* Modal Overlay (Dark Background with Smooth Fade-in) */
 .modal-overlay {
   position: fixed;
   top: 0;
   left: 0;
   width: 100%;
   height: 100%;
-  background-color: rgba(0, 0, 0, 0.7);
-  /* Dark overlay */
+  background-color: rgba(0, 0, 0, 0.7); /* Dark overlay */
   display: flex;
   justify-content: center;
   align-items: center;
   z-index: 1000;
+  opacity: 0;
+  animation: fadeIn 0.3s ease-in-out forwards;
 }
 
+/* Modal Box */
 .modal {
-  background-color: #1e1e1e;
-  /* Dark modal background */
-  padding: 20px;
+  background-color: #1e1e1e; /* Dark modal background */
+  padding: 25px;
   border-radius: 10px;
   width: 90%;
-  max-width: 500px;
+  max-width: 450px; /* Adjusted for better usability */
   box-shadow: 0 4px 6px rgba(0, 0, 0, 0.3);
+  transform: scale(0.9);
+  animation: scaleUp 0.3s ease-in-out forwards;
 }
 
+/* Modal Title */
 .modal h2 {
   margin-top: 0;
-  color: #e0e0e0;
-  /* Light text */
+  color: #e0e0e0; /* Light text */
+  text-align: center;
 }
 
-/* Ensure input fields in all modals do not overflow */
+/* Input & Textarea Styles */
 .modal input,
 .modal textarea {
-  width: 100%; /* Ensure input boxes fit within the modal */
-  padding: 12px; /* Larger padding for better usability */
-  margin-bottom: 10px;
-  border: 1px solid #333; /* Dark border */
-  border-radius: 5px;
+  width: 100%;
+  padding: 12px;
+  margin-bottom: 12px;
+  border: 1px solid #333;
+  border-radius: 6px;
   background-color: #333; /* Dark input background */
   color: #e0e0e0; /* Light text */
-  box-sizing: border-box; /* Ensure padding does not overflow width */
+  box-sizing: border-box;
+  font-size: 16px;
+}
+
+/* Ensure Textareas are Large Enough */
+.modal textarea {
+  min-height: 150px;
+  max-height: 300px;
+  resize: vertical;
 }
 
 /* Ensure textareas for descriptions are larger */
@@ -373,45 +385,80 @@ footer {
 
 
 
+/* Placeholder Styling */
 .modal input::placeholder,
 .modal textarea::placeholder {
-  color: #888;
-  /* Placeholder text */
+  color: #aaa; /* Slightly lighter placeholder text */
 }
 
+/* Modal Buttons */
 .modal button {
-  background-color: #bb86fc;
-  /* Light purple */
-  color: #121212;
-  /* Dark text */
+  width: 100%;
+  background-color: #bb86fc; /* Light purple */
+  color: #121212; /* Dark text */
   border: none;
-  padding: 10px 20px;
-  border-radius: 5px;
+  padding: 12px;
+  border-radius: 6px;
+  font-size: 16px;
   cursor: pointer;
-  margin-right: 10px;
+  margin-top: 10px;
+  transition: background 0.2s ease-in-out;
 }
-
+/* Close Button */
 .modal button.close {
-  background-color: #333;
-  /* Dark button */
+  background-color: #333; /* Dark button */
   color: #e0e0e0;
-  /* Light text */
 }
 
 .modal button.close:hover {
   background-color: #444;
-  /* Slightly lighter dark */
 }
 
+/* Button Hover Effects */
+.modal button:hover {
+  background-color: #9a67ea; /* Slightly darker purple */
+}
+
+/* Delete Button */
 .modal button.delete-btn {
   background-color: #ff5555;
-  /* Red for delete actions */
   color: #121212;
-  /* Dark text */
 }
 
 .modal button.delete-btn:hover {
   background-color: #ff3333;
-  /* Brighter red */
+}
+
+/* Smooth Fade-in Animation */
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+
+/* Scale-Up Animation */
+@keyframes scaleUp {
+  from {
+    transform: scale(0.9);
+  }
+  to {
+    transform: scale(1);
+  }
+}
+
+/* Responsive Tweaks */
+@media screen and (max-width: 480px) {
+  .modal {
+    max-width: 90%;
+    padding: 20px;
+  }
+
+  .modal button {
+    font-size: 14px;
+    padding: 10px;
+  }
 }
 

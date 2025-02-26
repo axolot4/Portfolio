@@ -2,6 +2,7 @@ import React, { useState, useEffect } from "react";
 import "./Home.css";
 import { useNavigate } from "react-router-dom";
 import { useTranslation } from "react-i18next";
+import emailjs from "emailjs-com";
 
 const Home: React.FC = () => {
   const { t, i18n } = useTranslation();
@@ -69,6 +70,36 @@ const Home: React.FC = () => {
       approved: boolean;
     }[]
   >([]);
+
+  const [isEmailModalOpen, setIsEmailModalOpen] = useState(false);
+  const [emailSubject, setEmailSubject] = useState("");
+  const [emailMessage, setEmailMessage] = useState("");
+
+  const sendEmail = (e: React.FormEvent<HTMLFormElement>) => {
+    e.preventDefault(); // Prevent page refresh
+
+    emailjs
+      .send(
+        "your_service_id", // Replace with your EmailJS Service ID
+        "your_template_id", // Replace with your EmailJS Template ID
+        { subject: emailSubject, message: emailMessage },
+        "your_public_key" // Replace with your EmailJS Public Key
+      )
+      .then(
+        () => {
+          alert("Email sent successfully!");
+          setIsEmailModalOpen(false);
+          setEmailSubject("");
+          setEmailMessage("");
+        },
+        (error) => {
+          console.error("Error sending email:", error);
+          alert("Failed to send email.");
+        }
+      );
+  };
+
+
 
   const [isCommentModalOpen, setIsCommentModalOpen] = useState(false);
   const [newComment, setNewComment] = useState({
@@ -302,8 +333,8 @@ const Home: React.FC = () => {
           projectImages: Array.isArray(projectToEdit.projectImages)
             ? projectToEdit.projectImages // Keep it as an array
             : String(projectToEdit.projectImages) // Ensure it's a string before calling .split(",")
-                .split(",")
-                .map((img) => img.trim()),
+              .split(",")
+              .map((img) => img.trim()),
         }),
       }
     )
@@ -515,13 +546,39 @@ const Home: React.FC = () => {
         </div>
       </header>
 
+      {isEmailModalOpen && (
+        <div className="modal-overlay">
+          <div className="modal-content">
+            <h2>Send an Email</h2>
+            <form onSubmit={sendEmail}>
+              <input
+                type="text"
+                placeholder="Subject"
+                value={emailSubject}
+                onChange={(e) => setEmailSubject(e.target.value)}
+                required
+              />
+              <textarea
+                placeholder="Message"
+                value={emailMessage}
+                onChange={(e) => setEmailMessage(e.target.value)}
+                required
+              />
+              <button type="submit">Send</button>
+              <button type="button" onClick={() => setIsEmailModalOpen(false)}>Close</button>
+            </form>
+          </div>
+        </div>
+      )}
+
+
       {/* Contact Section */}
       <section id="contact" className="contact">
         <h2>{t("contact.title")}</h2>
         <p>
           📧 {t("contact.email")}:{" "}
           <a href="mailto:ricardolfalcao.2005@gmail.com">
-            Send an email
+            Mail
           </a>
         </p>
         <p>
