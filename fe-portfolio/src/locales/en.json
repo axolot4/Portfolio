@@ -8,7 +8,8 @@
   "buttons": {
     "cancel": "Cancel",
     "delete": "Delete",
-    "yes_delete": "Yes, Delete"
+    "yes_delete": "Yes, Delete",
+    "send_email": "Send me an email"
   },
   "homepage": {
     "welcome_message": "Welcome to my website",

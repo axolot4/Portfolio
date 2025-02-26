@@ -578,7 +578,7 @@ const Home: React.FC = () => {
         <h2>{t("contact.title")}</h2>
         <p>
           📧 {t("contact.email")}:
-          <button className="email-button" onClick={() => setIsEmailModalOpen(true)}>Send an Email</button>
+          <button className="email-button" onClick={() => setIsEmailModalOpen(true)}>{t("buttons.send_email")}</button>
         </p>
         <p>
           💼 {t("contact.linkedin")}:{" "}
