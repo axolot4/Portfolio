@@ -148,11 +148,11 @@ section {
 
 .profile-pic {
   width: 150px;
-  height: 150px;
+  height: auto;
   border-radius: 50%;
   margin-bottom: 20px;
+  object-fit: cover;
 }
-
 .hero h1 {
   font-size: 2.5rem;
   margin-bottom: 10px;

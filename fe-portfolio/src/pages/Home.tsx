@@ -529,7 +529,7 @@ const Home: React.FC = () => {
           <h1>{t("homepage.welcome_message")}</h1>
           <p>{t("homepage.subtitle")}</p>
           <div className="cv-section">
-            <p>Download My CV</p>
+            <p>{t("cv.title")}</p>
             <div className="cv-buttons">
               <a href="/assets/Resume.pdf" download className="download-btn">
                 ENG
