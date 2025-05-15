@@ -804,7 +804,7 @@ const Home: React.FC = () => {
 
       {/* Projects Section */}
       <section id="projects" className="projects">
-        <h2>Projects</h2>
+        <h2>{t("projects.title")}</h2>
         <div className="projects-container">
           {projects.map((project) => (
             <div

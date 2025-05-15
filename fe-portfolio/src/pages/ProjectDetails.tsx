@@ -30,7 +30,7 @@ const ProjectDetails: React.FC = () => {
   return (
     <div className="project-details-container">
       <button className="back-btn" onClick={() => navigate("/")}>
-        ← Back to Projects
+        ← Back
       </button>
 
       <h1>{project.projectName}</h1>
